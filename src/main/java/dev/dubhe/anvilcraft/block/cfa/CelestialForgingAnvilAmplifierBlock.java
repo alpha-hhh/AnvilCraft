@@ -1,7 +1,6 @@
 package dev.dubhe.anvilcraft.block.cfa;
 
 import dev.anvilcraft.lib.v2.util.ShapeUtil;
-import dev.dubhe.anvilcraft.api.hammer.IHammerChangeable;
 import dev.dubhe.anvilcraft.api.hammer.IHammerRemovable;
 import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.multipart.FlexibleMultiPartBlock;
@@ -14,21 +13,25 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -38,9 +41,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class CelestialForgingAnvilAmplifierBlock
     extends FlexibleMultiPartBlock<DirectionCube232PartHalf, DirectionProperty, Direction>
-    implements IHammerChangeable, IHammerRemovable {
+    implements IHammerRemovable, SimpleWaterloggedBlock {
     public static final EnumProperty<DirectionCube232PartHalf> HALF = EnumProperty.create("half", DirectionCube232PartHalf.class);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final VoxelShape NORTH_TIP = ShapeUtil.merge(
         new AABB(0, 0, 0, 16, 4, 16),
         new AABB(5, 5, 5, 10, 10, 10)
@@ -101,6 +105,7 @@ public class CelestialForgingAnvilAmplifierBlock
             this.getStateDefinition().any()
                 .setValue(HALF, DirectionCube232PartHalf.BOTTOM_PART)
                 .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
         );
     }
 
@@ -164,10 +169,10 @@ public class CelestialForgingAnvilAmplifierBlock
         return state.setValue(this.getPart(), part);
     }
 
-    // 增幅器放置时自动检测锻星砧角落并确定朝向
-    // 核心方块始终是 ES 角(BOTTOM_PART)，其余3块在西北侧
-    // 内层方形(3×3)四角检测角落方块 → 确定 FACING
-    // 外层方形(5×5)四角检测 BOTTOM_CENTER  → 确认真在砧角
+    /// 增幅器放置时自动检测锻星砧角落并确定朝向
+    /// 核心方块始终是 ES 角(BOTTOM_PART)，其余3块在西北侧
+    /// 内层方形(3×3)四角检测角落方块 → 确定 FACING
+    /// 外层方形(5×5)四角检测 BOTTOM_CENTER  → 确认真在砧角
     private static final int[][] CORNER_CHECKS = {
         { 1,  1, 0}, {-2,  1, 1}, { 1, -2, 2}, {-2, -2, 3},
     };
@@ -183,7 +188,7 @@ public class CelestialForgingAnvilAmplifierBlock
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        // 1. 在内层方形四角检测锻星砧角落方块
+        /// 1. 在内层方形四角检测锻星砧角落方块
         Direction facing = null;
         for (int[] c : CORNER_CHECKS) {
             for (int dy = 0; dy <= 1; dy++) {
@@ -198,7 +203,7 @@ public class CelestialForgingAnvilAmplifierBlock
             if (facing != null) break;
         }
 
-        // 2. 在外层方形四角验证锻星砧 BOTTOM_CENTER（排除孤立角落方块）
+        /// 2. 在外层方形四角验证锻星砧 BOTTOM_CENTER（排除孤立角落方块）
         if (facing != null) {
             boolean valid = false;
             for (int[] c : CENTER_CHECKS) {
@@ -221,7 +226,32 @@ public class CelestialForgingAnvilAmplifierBlock
             }
             return null;
         }
-        return this.defaultBlockState().setValue(FACING, facing);
+        FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        return this.defaultBlockState()
+            .setValue(FACING, facing)
+            .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+    }
+
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED)
+            ? Fluids.WATER.getSource(false)
+            : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockState updateShape(
+        BlockState state,
+        Direction direction,
+        BlockState neighborState,
+        LevelAccessor level,
+        BlockPos pos,
+        BlockPos neighborPos
+    ) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
     private static boolean isCornerPart(Cube323PartHalf half) {
@@ -249,7 +279,7 @@ public class CelestialForgingAnvilAmplifierBlock
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HALF, FACING);
+        builder.add(HALF, FACING, WATERLOGGED);
     }
 
     @Override
@@ -265,17 +295,6 @@ public class CelestialForgingAnvilAmplifierBlock
     }
 
     @Override
-    public boolean change(Player player, BlockPos blockPos, Level level, ItemStack anvilHammer) {
-        this.change(blockPos, level, (state) -> state.cycle(FACING));
-        return true;
-    }
-
-    @Override
-    public @Nullable Property<?> getChangeableProperty(BlockState blockState) {
-        return FACING;
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(
         BlockState state,
         Level level,
@@ -284,7 +303,7 @@ public class CelestialForgingAnvilAmplifierBlock
         BlockHitResult hitResult
     ) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
-        // Scan nearby for the controller (BOTTOM_CENTER of anvil)
+        /// 在附近扫描控制器（锻星砧的 BOTTOM_CENTER）
         for (int dx = -5; dx <= 5; dx++) {
             for (int dz = -5; dz <= 5; dz++) {
                 for (int dy = -1; dy <= 1; dy++) {

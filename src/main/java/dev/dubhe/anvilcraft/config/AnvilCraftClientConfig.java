@@ -1,5 +1,6 @@
 package dev.dubhe.anvilcraft.config;
 
+import com.google.gson.annotations.SerializedName;
 import dev.anvilcraft.lib.v2.config.BoundedDiscrete;
 import dev.anvilcraft.lib.v2.config.CollapsibleObject;
 import dev.anvilcraft.lib.v2.config.Comment;
@@ -20,7 +21,7 @@ public class AnvilCraftClientConfig {
     public boolean heliostatsSunflowerModel = true;
 
     @Comment("Do not render power component tooltip when jade present")
-    public boolean doNotShowTooltipWhenJadePresent = true;
+    public boolean doNotShowTooltipWhenJadePresent = false;
 
     @Comment("Enable ground heave shockwave particles and sound when giant anvil triggers shock mechanism")
     public boolean groundHeaveParticlesEnabled = true;
@@ -33,8 +34,9 @@ public class AnvilCraftClientConfig {
     @BoundedDiscrete(max = 1, min = 0)
     public double groundHeaveParticleChance = 0.8;
 
+    @SerializedName("Display Redstone EMP Particles")
     @Comment("Enable redstone EMP particle effects")
-    public boolean redstoneEmpParticlesEnabled = true;
+    public boolean displayRedstoneEmpParticles = true;
 
     @Comment("Render lines between power transmitters")
     public boolean renderPowerTransmitterLines = true;
@@ -45,37 +47,71 @@ public class AnvilCraftClientConfig {
     @Comment("Scanline post-processing effect on 3D structure previews.")
     public boolean renderScanPreviewEffect = true;
 
+    @CollapsibleObject
+    public GravitationalLens gravitationalLens = new GravitationalLens();
+
+    public static class GravitationalLens {
+        @Comment("Gravitational lensing post-processing effect near black holes")
+        public boolean renderBlackHoleLensing = true;
+
+        @Comment("Maximum number of black/white holes rendered (2-256). Higher = more holes, lower = better performance.")
+        @BoundedDiscrete(min = 2, max = 256)
+        public int maxHoleCount = 8;
+
+        @Comment("Lens distortion strength (higher = stronger bending, 0.002 default)")
+        public double lensStrength = 1.0 / 512.0;
+
+        @Comment("Event horizon radius (screen UV units, 0.083 default)")
+        public double eventHorizonRadius = 1.0 / 12.0;
+
+        @Comment("Reference distance for perspective scaling. At this distance, effect = config size. Closer = bigger.")
+        public double lensPerspectiveScale = 10.0;
+
+        @Comment("Lens direction: >0 = convex (gravitational pull toward center), <0 = concave (push away). Magnitude scales strength.")
+        public double lensDirection = 1.0;
+    }
+
     @Comment("A vertical item frame vertically displays items")
     public boolean verticalItemFrame = false;
 
     @Comment("Enable exhaust particles when flying with Ionocraft Backpack")
-    public boolean ionoCraftBackpackExhaustParticlesEnabled = true;
+    public boolean ionocraftBackpackExhaustParticlesEnabled = true;
 
+    @SerializedName("Ionocraft Backpack HUD")
     @CollapsibleObject
-    public IonoCraftBackpackHud ionoCraftBackpackHud = new IonoCraftBackpackHud();
+    public IonocraftBackpackHud ionocraftBackpackHud = new IonocraftBackpackHud();
 
+    @SerializedName("Show Multiphase Stored ID")
     @Comment("Add a tooltip line that shows multiphase stored ID")
     public boolean showMultiphaseStoredId = false;
 
-    public static class IonoCraftBackpackHud {
+    public static class IonocraftBackpackHud {
+        @SerializedName("Enabled")
         @Comment("If true, will show Ionocraft Backpack current power in hud")
         public boolean enabled = true;
 
+        @SerializedName("HUD Scale")
         @Comment("The Gui Hud Scale")
         @BoundedDiscrete(min = 0, max = 8)
         public float hudScale = 0.75f;
 
+        @SerializedName("HUD X Position")
         @Comment("The gui hud x position")
         public int hudX = 8;
 
+        @SerializedName("HUD Y Position")
         @Comment("The gui hud y position")
         public int hudY = 8;
     }
 
     public enum GoggleMode {
+        @SerializedName("Always Show")
         ALWAYS_SHOW,
+        @SerializedName("When Wearing Hammer")
         WEARING_HAMMER,
+        @SerializedName("When Holding Hammer")
         HOLDING_HAMMER,
+        @SerializedName("Toggle with Key")
         TOGGLE_WITH_KEY
     }
 }

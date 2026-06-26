@@ -29,6 +29,7 @@ public class RegisterAdditionalEventListener {
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/laser")));
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/axis")));
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/advanced_comparator_indicator")));
+        event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/infinite_collector_head")));
         event.register(CelestialForgingAnvilBlockEntityRenderer.R1);
         event.register(CelestialForgingAnvilBlockEntityRenderer.R2);
         event.register(CelestialForgingAnvilBlockEntityRenderer.R3);
@@ -70,6 +71,8 @@ public class RegisterAdditionalEventListener {
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/smart_block_placer_forearm")));
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/smart_block_placer_claw")));
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/smart_block_placer_claw_open")));
+        event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/pump_piston_1")));
+        event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/pump_piston_2")));
 
         // Special celestial body models
         event.register(ModelResourceLocation.standalone(AnvilCraft.of("block/celestial_body/planet_overworld")));

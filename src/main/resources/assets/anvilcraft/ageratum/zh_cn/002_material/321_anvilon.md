@@ -1,6 +1,6 @@
 ---
 navigation:
-  title: "§5钚"
+  title: "§5砧子"
   icon: "anvilcraft:confinement_chamber"
 items:
   - anvilcraft:confinement_chamber
@@ -49,9 +49,11 @@ items:
 
 ## 砧子辐照
 
-<structure id="../structures/anvilon_irradiator.nbt"/>
+<structure id="../../structures/anvilon_irradiator.nbt"/>
 
 <ref item="anvilcraft:neutron_irradiator"/>同一水平面周围3x3区域内的八个格子内存在6个相同的砧子时，变为对应的“砧子辐照器”
+
+- 解锁[铁块增殖配方](../008_recipe/320_iron_block.md)
 
 # <ref item="anvilcraft:confined_neutronium_ingot"/>
 

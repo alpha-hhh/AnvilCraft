@@ -1065,19 +1065,6 @@ public class RegistrumItemRecipeLoader {
             .save(provider);
     }
 
-    public static <T extends Item> void netheriteCrystalNucleus(DataGenContext<Item, T> ctx, RegistrumRecipeProvider provider) {
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
-            .pattern("ABA")
-            .define('A', ModItemTags.TUNGSTEN_PLATES)
-            .define('B', Items.NETHERITE_SCRAP)
-            .unlockedBy(
-                AnvilCraftDatagen.hasItem(ModItemTags.TUNGSTEN_PLATES),
-                RegistrumRecipeProvider.has(ModItemTags.TUNGSTEN_PLATES)
-            )
-            .unlockedBy(AnvilCraftDatagen.hasItem(Items.NETHERITE_SCRAP), RegistrumRecipeProvider.has(Items.NETHERITE_SCRAP))
-            .save(provider);
-    }
-
     public static <T extends Item> void levitationPowder(DataGenContext<Item, T> ctx, RegistrumRecipeProvider provider) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ctx.get(), 9)
             .requires(ModBlocks.LEVITATION_POWDER_BLOCK)
@@ -1351,4 +1338,19 @@ public class RegistrumItemRecipeLoader {
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.RUBY_PRISM.asItem()), AnvilCraftDatagen.has(ModBlocks.RUBY_PRISM))
             .save(provider);
     }
+
+    public static <T extends Item> void pipe(DataGenContext<Item, T> ctx, RegistrumRecipeProvider provider) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get(), 16)
+            .pattern(" B ")
+            .pattern("B B")
+            .pattern(" B ")
+            .define('B', ModBlocks.BRASS_PRESSURE_PLATE.asItem())
+            .group(ctx.getId().toString())
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.BRASS_PRESSURE_PLATE),
+                RegistrumRecipeProvider.has(ModBlocks.BRASS_PRESSURE_PLATE)
+            )
+            .save(provider);
+    }
+
 }

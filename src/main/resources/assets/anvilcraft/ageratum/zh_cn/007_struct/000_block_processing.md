@@ -18,7 +18,7 @@ navigation:
 
 # 方块 + 切石机：方块破坏
 
-<structure id="../structures/break.snbt"/>
+<structure id="../../structures/break.snbt"/>
 
 - 可以破坏无法被普通TNT爆炸破坏的方块，如<ref item="minecraft:obsidian"/>，但是普通铁砧将固定损坏一个耐久等级。
 - 为了防止方块破坏后铁砧掉在切石机上变为掉落物，你需要控制<ref item="anvilcraft:magnet_block"/>收回铁砧的时间。
@@ -26,7 +26,7 @@ navigation:
 
 # 单方块处理：方块粉碎
 
-<structure id="../structures/block_crush.snbt"/>
+<structure id="../../structures/block_crush.snbt"/>
 
 - <ref item="minecraft:cobblestone"/> → <ref item="minecraft:gravel"/> → <ref item="minecraft:sand"/>
 - <ref item="minecraft:polished_granite"/> → <ref item="minecraft:granite"/> → <ref item="minecraft:red_sand"/>
@@ -35,7 +35,7 @@ navigation:
 
 # 双方块处理：方块压合
 
-<structure id="../structures/press.snbt"/>
+<structure id="../../structures/press.snbt"/>
 
 - 苔藓块 + 泥土 → 草方块
 - 树叶 + 泥土 → 灰化土
@@ -50,7 +50,7 @@ navigation:
 
 上方的方块不消耗，转化下方的方块
 
-<structure id="../structures/smear.snbt"/>
+<structure id="../../structures/smear.snbt"/>
 
 - 苔藓块 + 圆石 → 苔石
 - 苔藓块 + 石砖 → 苔石砖
@@ -61,7 +61,7 @@ navigation:
 
 转化方块，并在炼药锅中生成资源
 
-<structure id="../structures/squeeze.snbt"/>
+<structure id="../../structures/squeeze.snbt"/>
 
 - 湿海绵 → 海绵 + 水
 - 苔藓块 → 覆地苔藓 + 水
@@ -73,4 +73,14 @@ navigation:
 <info>
 本模组改进：当炼药锅集满4层蜂蜜时，可以用漏斗等物流方块取出蜂蜜块
 </info>
+
+# 方块流程处理
+
+接受包括但不限于上述各种加工方式作为单个环节，可以进行多个不同环节的加工，并循环数次
+
+<info>
+以<ref item="anvilcraft:redstone_computer"/>为例，它需要依次压入<ref item="anvilcraft:circuit_board"/>、<ref item="anvilcraft:processor"/>、<ref item="anvilcraft:disk"/>
+</info>
+
+<recipe id="anvilcraft:procedural_process/redstone_computer_from_procedural"/>
     

@@ -32,6 +32,7 @@ import dev.dubhe.anvilcraft.block.entity.HeatCollectorBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.HeaterBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.HeliostatsBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.InductionLightBlockEntity;
+import dev.dubhe.anvilcraft.block.entity.InfiniteCollectorBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.ItemCollectorBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.ItemDetectorBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.LargeFluidTankBlockEntity;
@@ -66,6 +67,9 @@ import dev.dubhe.anvilcraft.block.entity.WhiteHoleBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.WipBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.batch.BatchCrafterBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.batch.BatchCutterBlockEntity;
+import dev.dubhe.anvilcraft.block.entity.fluid.PipeBlockEntity;
+import dev.dubhe.anvilcraft.block.entity.fluid.PipeNodeBlockEntity;
+import dev.dubhe.anvilcraft.block.entity.fluid.PumpBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.heatable.GlowingBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.heatable.HeatedBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.heatable.IncandescentBlockEntity;
@@ -94,9 +98,11 @@ import dev.dubhe.anvilcraft.client.renderer.blockentity.FluidTankBlockEntityRend
 import dev.dubhe.anvilcraft.client.renderer.blockentity.HasMobBlockRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.HeatCollectorRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.HeliostatsRenderer;
+import dev.dubhe.anvilcraft.client.renderer.blockentity.InfiniteCollectorRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.LargeFluidTankBlockEntityRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.LaserBlockRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.PlasmaJetsRenderer;
+import dev.dubhe.anvilcraft.client.renderer.blockentity.PumpBlockEntityRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.SmartBlockPlacerRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.TeslaTowerRenderer;
 import dev.dubhe.anvilcraft.client.renderer.blockentity.TradingStationBlockEntityRenderer;
@@ -242,6 +248,11 @@ public class ModBlockEntities {
         "heat_collector",
         HeatCollectorBlockEntity::createBlockEntity
     ).renderer(() -> HeatCollectorRenderer::new).validBlock(ModBlocks.HEAT_COLLECTOR).register();
+
+    public static final BlockEntityEntry<InfiniteCollectorBlockEntity> INFINITE_COLLECTOR = REGISTRUM.blockEntity(
+        "infinite_collector",
+        InfiniteCollectorBlockEntity::createBlockEntity
+    ).renderer(() -> InfiniteCollectorRenderer::new).validBlock(ModBlocks.INFINITE_COLLECTOR).register();
 
     public static final BlockEntityEntry<MineralFountainBlockEntity> MINERAL_FOUNTAIN = REGISTRUM.blockEntity(
         "mineral_fountain",
@@ -461,15 +472,31 @@ public class ModBlockEntities {
         .validBlock(ModBlocks.STRUCTURE_SCANNER)
         .register();
 
+    public static final BlockEntityEntry<PipeNodeBlockEntity> PIPE_NODE = REGISTRUM
+        .blockEntity("pipe_node", PipeNodeBlockEntity::create)
+        .validBlock(ModBlocks.PIPE_NODE)
+        .register();
+
+    public static final BlockEntityEntry<PipeBlockEntity> PIPE = REGISTRUM
+        .blockEntity("pipe", PipeBlockEntity::create)
+        .validBlocks(ModBlocks.PIPE_STRAIGHT, ModBlocks.PIPE_CORNER)
+        .register();
+
     public static final BlockEntityEntry<SpacetimeSupercomputerBlockEntity> SPACETIME_SUPERCOMPUTER = REGISTRUM
         .blockEntity("spacetime_supercomputer", SpacetimeSupercomputerBlockEntity::new)
         .validBlock(ModBlocks.SPACETIME_SUPERCOMPUTER)
         .register();
 
     public static final BlockEntityEntry<LargeLaserBlockEntity> LARGE_LASER = REGISTRUM
-        .blockEntity("laser_laser", LargeLaserBlockEntity::new)
+        .blockEntity("large_laser", LargeLaserBlockEntity::new)
         .validBlock(ModBlocks.LARGE_LASER)
         .renderer(() -> LaserBlockRenderer::new)
+        .register();
+
+    public static final BlockEntityEntry<PumpBlockEntity> PUMP = REGISTRUM
+        .blockEntity("pump", PumpBlockEntity::create)
+        .validBlock(ModBlocks.PUMP)
+        .renderer(() -> PumpBlockEntityRenderer::new)
         .register();
 
     public static final BlockEntityEntry<WipBlockEntity> WIP_BLOCK = REGISTRUM

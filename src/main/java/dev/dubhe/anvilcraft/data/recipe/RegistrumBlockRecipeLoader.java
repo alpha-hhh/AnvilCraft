@@ -2062,8 +2062,8 @@ public class RegistrumBlockRecipeLoader {
             .pattern("ABA")
             .pattern("BCB")
             .pattern("ABA")
-            .define('A', ModBlocks.FLUID_TANK)
-            .define('B', ModBlocks.LARGE_FLUID_TANK)
+            .define('A', ModBlocks.PUMP)
+            .define('B', ModBlocks.PUMP)
             .define('C', ModBlocks.SPACETIME_SUPERCOMPUTER)
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.SPACETIME_SUPERCOMPUTER),
                 RegistrumRecipeProvider.has(ModBlocks.SPACETIME_SUPERCOMPUTER))
@@ -2096,6 +2096,7 @@ public class RegistrumBlockRecipeLoader {
             .requires(ModBlocks.SPACETIME_SUPERCOMPUTER)
             .inputBlock(ModBlocks.GIANT_ANVIL)
             .resultBlock(ctx)
+            .result(ctx.get(), 3)
             .save(provider);
     }
 
@@ -2122,6 +2123,40 @@ public class RegistrumBlockRecipeLoader {
                 AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_INGOT))
             .unlockedBy(AnvilCraftDatagen.hasItem(ModBlocks.SPACETIME_SUPERCOMPUTER),
                 RegistrumRecipeProvider.has(ModBlocks.SPACETIME_SUPERCOMPUTER))
+            .save(provider);
+    }
+
+    public static <T extends Block> void infiniteCollector(DataGenContext<Block, T> ctx, RegistrumRecipeProvider provider) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get())
+            .pattern(" C ")
+            .pattern("CHC")
+            .pattern("TTT")
+            .define('C', ModBlocks.CHARGE_COLLECTOR)
+            .define('H', ModBlocks.HEAT_COLLECTOR)
+            .define('T', ModItems.TRANSCENDIUM_INGOT)
+            .unlockedBy("has_charge_collector", AnvilCraftDatagen.has(ModBlocks.CHARGE_COLLECTOR))
+            .unlockedBy("has_heat_collector", AnvilCraftDatagen.has(ModBlocks.HEAT_COLLECTOR))
+            .unlockedBy(AnvilCraftDatagen.hasItem(ModItems.TRANSCENDIUM_INGOT),
+                AnvilCraftDatagen.has(ModItems.TRANSCENDIUM_INGOT))
+            .save(provider);
+    }
+
+    public static <T extends Block> void pump(DataGenContext<Block, T> ctx, RegistrumRecipeProvider provider) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get().asItem(), 2)
+            .pattern("PCP")
+            .pattern("P P")
+            .pattern("   ")
+            .define('P', Blocks.PISTON)
+            .define('C', ModBlocks.PIPE_STRAIGHT.asItem())
+            .group(ctx.getId().toString())
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(Blocks.PISTON.asItem()),
+                RegistrumRecipeProvider.has(Blocks.PISTON)
+            )
+            .unlockedBy(
+                AnvilCraftDatagen.hasItem(ModBlocks.PIPE_STRAIGHT.asItem()),
+                RegistrumRecipeProvider.has(ModBlocks.PIPE_STRAIGHT)
+            )
             .save(provider);
     }
 }

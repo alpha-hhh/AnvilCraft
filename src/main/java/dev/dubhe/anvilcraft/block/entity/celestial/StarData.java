@@ -1,6 +1,9 @@
 package dev.dubhe.anvilcraft.block.entity.celestial;
 
 import net.minecraft.nbt.CompoundTag;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
 
 public record StarData(
     CelestialBodyClass bodyClass,
@@ -11,7 +14,8 @@ public record StarData(
     float axialTilt,
     int rotationSpeed,
     int magneticFieldStrength,
-    int energy
+    int energy,
+    @Nullable UUID bodyUuid
 ) implements CelestialBodyData {
 
     @Override
@@ -22,6 +26,16 @@ public record StarData(
     @Override
     public RingType ringType() {
         return RingType.NONE;
+    }
+
+    /// 创建一个带有新body UUID的副本，保留所有其他字段。
+    public StarData withBodyUuid(UUID uuid) {
+        return new StarData(bodyClass, size, colorR, colorG, colorB, axialTilt, rotationSpeed, magneticFieldStrength, energy, uuid);
+    }
+
+    /// 从bodySeed派生一个可复现的UUID。相同的bodySeed总是产生相同的UUID，这使得奇点水晶副本能够共享原始发现的虫洞身份。
+    public static UUID uuidFromBodySeed(long bodySeed) {
+        return new UUID(bodySeed, bodySeed);
     }
 
     @Override
@@ -37,6 +51,9 @@ public record StarData(
         tag.putInt("rotationSpeed", rotationSpeed);
         tag.putInt("magneticFieldStrength", magneticFieldStrength);
         tag.putInt("energy", energy);
+        if (bodyUuid != null) {
+            tag.putUUID("bodyUuid", bodyUuid);
+        }
         return tag;
     }
 
@@ -54,6 +71,7 @@ public record StarData(
         int mag = tag.contains("magneticFieldStrength") ? tag.getInt("magneticFieldStrength") : 0;
         int energy = tag.contains("energy") ? tag.getInt("energy") : 0;
         int rotSpeed = tag.contains("rotationSpeed") ? tag.getInt("rotationSpeed") : 0;
-        return new StarData(cls, size, r, g, b, tag.getFloat("axialTilt"), rotSpeed, mag, energy);
+        UUID uuid = tag.contains("bodyUuid") ? tag.getUUID("bodyUuid") : null;
+        return new StarData(cls, size, r, g, b, tag.getFloat("axialTilt"), rotSpeed, mag, energy, uuid);
     }
 }

@@ -2,7 +2,6 @@ package dev.dubhe.anvilcraft.block.cfa.item;
 
 import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilBlock;
 import dev.dubhe.anvilcraft.block.cfa.CelestialForgingAnvilPortalBlock;
-import dev.dubhe.anvilcraft.block.entity.CelestialForgingAnvilBlockEntity;
 import dev.dubhe.anvilcraft.block.state.Cube323PartHalf;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import net.minecraft.ChatFormatting;
@@ -30,30 +29,18 @@ public class CelestialForgingAnvilPortalBlockItem extends BlockItem {
         BlockPos pos = context.getClickedPos();
         if (player == null) return null;
 
-        // Scan adjacent positions for CFA side centers
+        /// 扫描相邻位置寻找锻星砧侧面中心
         for (Direction dir : Direction.Plane.HORIZONTAL) {
             BlockPos cfaPos = pos.relative(dir);
             BlockState cfaState = level.getBlockState(cfaPos);
             if (cfaState.is(ModBlocks.CELESTIAL_FORGING_ANVIL)) {
                 Cube323PartHalf half = cfaState.getValue(CelestialForgingAnvilBlock.HALF);
-                // Only allow placement on side centers (BOTTOM_N/S/E/W)
+                /// 只允许在侧面中心放置（BOTTOM_N/S/E/W）
                 if (half == Cube323PartHalf.BOTTOM_N || half == Cube323PartHalf.BOTTOM_S
                     || half == Cube323PartHalf.BOTTOM_E || half == Cube323PartHalf.BOTTOM_W) {
-                    // Check with parent CFA that this side doesn't already have a portal
-                    BlockPos controllerPos = cfaPos.offset(half.getOffset().multiply(-1));
-                    if (level.getBlockEntity(controllerPos) instanceof CelestialForgingAnvilBlockEntity cfaBe) {
-                        if (cfaBe.getPortals().containsKey(half)) {
-                            if (player instanceof ServerPlayer sp) {
-                                sp.sendSystemMessage(
-                                    Component.translatable("message.anvilcraft.portal.already_exists")
-                                        .withStyle(ChatFormatting.RED), true);
-                            }
-                            return null;
-                        }
-                        return getBlock().defaultBlockState()
-                            .setValue(CelestialForgingAnvilPortalBlock.FACING, dir.getOpposite())
-                            .setValue(CelestialForgingAnvilPortalBlock.OPEN, false);
-                    }
+                    return getBlock().defaultBlockState()
+                        .setValue(CelestialForgingAnvilPortalBlock.FACING, dir.getOpposite())
+                        .setValue(CelestialForgingAnvilPortalBlock.OPEN, false);
                 }
             }
         }

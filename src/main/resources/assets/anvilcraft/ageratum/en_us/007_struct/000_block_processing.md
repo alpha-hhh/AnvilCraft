@@ -18,7 +18,7 @@ Before reading this page, familiarize yourself with <ref item="anvilcraft:magnet
 
 # Block + Stonecutter: Block Destruction
 
-<structure id="../structures/break.snbt"/>
+<structure id="../../structures/break.snbt"/>
 
 - Can destroy blocks that cannot be destroyed by ordinary TNT explosions, such as <ref item="minecraft:obsidian"/>, but a normal anvil will always lose one durability level.
 - To prevent the anvil from falling onto the stonecutter and becoming an item after the block is destroyed, you need to control the timing of the <ref item="anvilcraft:magnet_block"/> to retrieve the anvil.
@@ -26,7 +26,7 @@ Before reading this page, familiarize yourself with <ref item="anvilcraft:magnet
 
 # Single Block Processing: Block Crushing
 
-<structure id="../structures/block_crush.snbt"/>
+<structure id="../../structures/block_crush.snbt"/>
 
 - <ref item="minecraft:cobblestone"/> -> <ref item="minecraft:gravel"/> -> <ref item="minecraft:sand"/>
 - <ref item="minecraft:polished_granite"/> -> <ref item="minecraft:granite"/> -> <ref item="minecraft:red_sand"/>
@@ -35,7 +35,7 @@ Before reading this page, familiarize yourself with <ref item="anvilcraft:magnet
 
 # Dual Block Processing: Block Pressing
 
-<structure id="../structures/press.snbt"/>
+<structure id="../../structures/press.snbt"/>
 
 - Moss Block + Dirt -> Grass Block
 - Leaves + Dirt -> Podzol
@@ -50,7 +50,7 @@ Before reading this page, familiarize yourself with <ref item="anvilcraft:magnet
 
 The block above is not consumed; it converts the block below
 
-<structure id="../structures/smear.snbt"/>
+<structure id="../../structures/smear.snbt"/>
 
 - Moss Block + Cobblestone -> Mossy Cobblestone
 - Moss Block + Stone Bricks -> Mossy Stone Bricks
@@ -61,7 +61,7 @@ The block above is not consumed; it converts the block below
 
 Converts the block and generates resources in the cauldron
 
-<structure id="../structures/squeeze.snbt"/>
+<structure id="../../structures/squeeze.snbt"/>
 
 - Wet Sponge -> Sponge + Water
 - Moss Block -> Moss Carpet + Water
@@ -73,4 +73,14 @@ Converts the block and generates resources in the cauldron
 <info>
 Mod Improvement: When the cauldron is filled with 4 layers of honey, you can extract honey blocks using hoppers and other logistics blocks.
 </info>
+
+# Block Procedural Processing
+
+Accepts various processing methods including but not limited to those above as individual steps, allowing multiple different steps to be performed in sequence, cycled several times
+
+<info>
+Taking <ref item="anvilcraft:redstone_computer"/> as an example, it requires sequentially pressing <ref item="anvilcraft:circuit_board"/>, <ref item="anvilcraft:processor"/>, <ref item="anvilcraft:disk"/>
+</info>
+
+<recipe id="anvilcraft:procedural_process/redstone_computer_from_procedural"/>
     
