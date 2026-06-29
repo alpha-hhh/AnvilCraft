@@ -120,7 +120,6 @@ public class ScreenLang {
         provider.add("tooltip.anvilcraft.burning_heater.state.lit", "State: Lit");
         provider.add("tooltip.anvilcraft.burning_heater.burn_time", "Remaining Burn Time: %s");
 
-        provider.add("block.anvilcraft.celestial_forging_anvil.placement_too_close_to_another", "Too close to another Celestial Forging Anvil"); // 距离另一个锻星砧太近
         provider.add("block.anvilcraft.celestial_forging_anvil_amplifier.need_anvil_corner", "Needs to be placed on the corner of the Celestial Forging Anvil");
         provider.add("block.anvilcraft.heat_collector.placement_too_close_to_another", "Too close to another heat collector");
         provider.add("tooltip.anvilcraft.heat_collector.not_work", "Heat Collector is not working");
@@ -367,7 +366,7 @@ public class ScreenLang {
         provider.add("screen.anvilcraft.cfa.class.g_main", "G-Star"); // Yellow Dwarf 黄矮星
         provider.add("screen.anvilcraft.cfa.class.f_main", "F-Star"); // Yellow-White Main 黄白主序星
         provider.add("screen.anvilcraft.cfa.class.a_main", "A-Star"); // White Main 白主序星
-        provider.add("screen.anvilcraft.cfa.class.b_main", "B-Star"); // Blue-White Main 蓝主序星
+        provider.add("screen.anvilcraft.cfa.class.b_main", "B-Star"); // Blue-White Main 蓝白主序星
         provider.add("screen.anvilcraft.cfa.class.o_main", "O-Star"); // Blue Main 蓝主序星
         provider.add("screen.anvilcraft.cfa.class.m_giant", "M-Giant"); // Red Giant 红巨星
         provider.add("screen.anvilcraft.cfa.class.k_giant", "K-Giant"); // Orange Giant 橙巨星
@@ -498,7 +497,7 @@ public class ScreenLang {
                 ———————
                 Outputs:
                 §e[Log Int]§r
-                §fPramitive civilization offering§r
+                §fPrimitive civilization offering§r
                 ———————
                 Side Effects:
                 §7None§r"""
@@ -620,6 +619,14 @@ public class ScreenLang {
 
         // Planet resource bar
         provider.add("screen.anvilcraft.cfa.resource_title", "— Celestial Resources —"); // — 天体资源 —
+        provider.add("screen.anvilcraft.cfa.resource.mineral", "Mineral: "); // 矿物资源：
+        provider.add("screen.anvilcraft.cfa.resource.fluid", "Fluid: "); // 液体资源：
+        provider.add("screen.anvilcraft.cfa.resource.giant_item", "Giant Planet: "); // 巨行星资源：
+        provider.add("screen.anvilcraft.cfa.resource.giant_fluid", "Giant Planet Fluid: "); // 巨行星液体资源：
+        provider.add("screen.anvilcraft.cfa.resource.biological_item", "Biological: "); // 生物资源：
+        provider.add("screen.anvilcraft.cfa.resource.biological_fluid", "Biological Fluid: "); // 生物液体资源：
+        provider.add("screen.anvilcraft.cfa.resource.offering", "Offerings: "); // 祭品资源：
+        provider.add("screen.anvilcraft.cfa.resource.wasteland", "Wasteland: "); // 废土资源：
 
         // Seed slot tooltip
         provider.add("screen.anvilcraft.cfa.seed_slot.title", "Seed Item"); // 种子物品

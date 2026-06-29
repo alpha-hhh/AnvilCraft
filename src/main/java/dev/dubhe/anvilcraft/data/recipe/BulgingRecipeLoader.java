@@ -16,6 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 public class BulgingRecipeLoader {
     public static void init(RegistrumRecipeProvider provider) {
@@ -31,7 +32,6 @@ public class BulgingRecipeLoader {
         BulgingRecipeLoader.bulging(provider, ModItems.SPONGE_GEMMULE, Items.WET_SPONGE, 250);
         BulgingRecipeLoader.bulging(provider, ModItemTags.FLOUR, ModFoodItems.DOUGH);
         BulgingRecipeLoader.bulging(provider, Items.DRIED_KELP, Items.KELP);
-        BulgingRecipeLoader.crystallize(provider, ModItems.SEA_HEART_SHELL_SHARD, ModItems.PRISMARINE_CLUSTER, 250);
 
         VanillaConstants.CONCRETE_POWDERS.forEach(block -> bulging(provider, block, block.concrete));
 
@@ -69,6 +69,19 @@ public class BulgingRecipeLoader {
             .consume(1000)
             .result(ModItems.EXP_GEM)
             .save(provider);
+
+        BulgingRecipe.builder()
+            .cauldron(NeoForgeMod.MILK.getId())
+            .consume(1000)
+            .result(ModFoodItems.CREAM, 4)
+            .save(provider, AnvilCraft.of("bulging/cream_from_milk"));
+
+        BulgingRecipe.builder()
+            .cauldron(ModFluids.HONEY.getId())
+            .consume(1000)
+            .result(Items.HONEY_BLOCK)
+            .save(provider, AnvilCraft.of("bulging/honey_block"));
+
         BulgingRecipe.builder()
             .cauldron(Blocks.WATER_CAULDRON)
             .transform(ModBlocks.EXP_FLUID_CAULDRON.get())

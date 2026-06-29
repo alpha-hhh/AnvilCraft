@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft:time_warp/sea_heart_shell"
+        "recipe": "anvilcraft:bulging/honey_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft:time_warp/sea_heart_shell"
+      "anvilcraft:bulging/honey_block"
     ]
   }
 }

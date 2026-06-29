@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft:stamping/prismarine_crystals"
+        "recipe": "anvilcraft:bulging/cream_from_milk"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft:stamping/prismarine_crystals"
+      "anvilcraft:bulging/cream_from_milk"
     ]
   }
 }

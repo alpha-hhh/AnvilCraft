@@ -18,6 +18,7 @@ package dev.dubhe.anvilcraft.client.support;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import dev.dubhe.anvilcraft.util.ModClientFluidTypeExtensionImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,6 +29,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public final class FluidRenderHelper {
@@ -47,7 +49,12 @@ public final class FluidRenderHelper {
         boolean renderBottom,
         boolean invertGasses
     ) {
-        this.renderFluidBox(fluid, minX, minY, minZ, maxX, maxY, maxZ, getFluidBuilder(buffer), ms, light, renderBottom, invertGasses);
+        var renderProps = IClientFluidTypeExtensions.of(fluid.getFluid());
+        boolean opaque = (renderProps instanceof ModClientFluidTypeExtensionImpl ext && ext.isOpaque())
+            || fluid.is(NeoForgeMod.MILK.value());
+        RenderType renderType = opaque ? RenderType.cutout() : RenderType.translucent();
+        VertexConsumer builder = buffer.getBuffer(renderType);
+        this.renderFluidBox(fluid, minX, minY, minZ, maxX, maxY, maxZ, builder, ms, light, renderBottom, invertGasses);
     }
 
     public void renderFluidBox(
@@ -107,10 +114,6 @@ public final class FluidRenderHelper {
         }
 
         ms.popPose();
-    }
-
-    public static VertexConsumer getFluidBuilder(MultiBufferSource buffer) {
-        return buffer.getBuffer(RenderType.TRANSLUCENT);
     }
 
     public static void renderStillTiledFace(

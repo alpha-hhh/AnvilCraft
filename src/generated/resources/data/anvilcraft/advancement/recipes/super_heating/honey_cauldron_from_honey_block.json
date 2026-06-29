@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "anvilcraft:bulging/prismarine_cluster"
+        "recipe": "anvilcraft:super_heating/honey_cauldron_from_honey_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "anvilcraft:bulging/prismarine_cluster"
+      "anvilcraft:super_heating/honey_cauldron_from_honey_block"
     ]
   }
 }

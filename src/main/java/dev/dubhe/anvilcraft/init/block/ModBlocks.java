@@ -90,6 +90,7 @@ import dev.dubhe.anvilcraft.block.MagneticChuteBlock;
 import dev.dubhe.anvilcraft.block.MagnetoElectricCoreBlock;
 import dev.dubhe.anvilcraft.block.MeltGemCauldron;
 import dev.dubhe.anvilcraft.block.MengerSpongeBlock;
+import dev.dubhe.anvilcraft.block.MilkCauldronBlock;
 import dev.dubhe.anvilcraft.block.MineralFountainBlock;
 import dev.dubhe.anvilcraft.block.MobAmberBlock;
 import dev.dubhe.anvilcraft.block.NegativeMatterBlock;
@@ -221,6 +222,7 @@ import dev.dubhe.anvilcraft.init.item.ModItems;
 import dev.dubhe.anvilcraft.item.SingularityCrystalItem;
 import dev.dubhe.anvilcraft.item.TeslaTowerItem;
 import dev.dubhe.anvilcraft.item.property.component.OverLimitItemContainerContents;
+import dev.dubhe.anvilcraft.loot.conditions.RandomChanceWithFortuneCondition;
 import dev.dubhe.anvilcraft.util.DangerUtil;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
@@ -241,6 +243,8 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -266,6 +270,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
@@ -3385,6 +3390,14 @@ public class ModBlocks {
         .onRegister(block -> Item.BY_BLOCK.put(block, Items.CAULDRON))
         .register();
 
+    public static final BlockEntry<MilkCauldronBlock> MILK_CAULDRON = REGISTRUM.block("milk_cauldron", MilkCauldronBlock::new)
+        .initialProperties(() -> Blocks.CAULDRON)
+        .blockstate(DataGenUtil::noExtraModelOrState)
+        .loot((tables, block) -> tables.dropOther(block, Items.CAULDRON))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.CAULDRONS)
+        .onRegister(block -> Item.BY_BLOCK.put(block, Items.CAULDRON))
+        .register();
+
     public static final BlockEntry<ObsidianCauldron> OBSIDIAN_CAULDRON = REGISTRUM.block("obsidian_cauldron", ObsidianCauldron::new)
         .initialProperties(() -> Blocks.OBSIDIAN)
         .properties(it -> it.pushReaction(PushReaction.BLOCK))
@@ -4043,6 +4056,76 @@ public class ModBlocks {
             );
         })
         .simpleItem()
+        .register();
+
+    public static final BlockEntry<Block> ANCIENT_SEA_REEF = REGISTRUM
+        .block("ancient_sea_reef", Block::new)
+        .initialProperties(() -> Blocks.STONE)
+        .properties(p -> p
+            .noOcclusion()
+            .requiresCorrectToolForDrops()
+            .isValidSpawn(ModBlocks::never)
+            .isRedstoneConductor(ModBlocks::never)
+            .isSuffocating(ModBlocks::never)
+            .isViewBlocking(ModBlocks::never))
+        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .blockstate(DataGenUtil::simple)
+        .simpleItem()
+        .loot((tables, block) -> {
+            var silkTouch = DataGenUtil.hasSilkTouch(tables.getRegistries());
+            tables.add(
+                block, LootTable.lootTable()
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(block))
+                        .when(silkTouch))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.HEART_OF_THE_SEA))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.PRISMARINE_SHARD)
+                            .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0f))))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.PRISMARINE_CRYSTALS)
+                            .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0f))))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.TUBE_CORAL))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.BRAIN_CORAL))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.BUBBLE_CORAL))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.FIRE_CORAL))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.HORN_CORAL))
+                        .when(silkTouch.invert()))
+                    .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.HEART_OF_THE_SEA)
+                            .when(() -> new RandomChanceWithFortuneCondition(
+                                0.1f,
+                                LevelBasedValue.perLevel(0.1f, 0.1f),
+                                tables.getRegistries()
+                                    .lookupOrThrow(Registries.ENCHANTMENT)
+                                    .getOrThrow(Enchantments.FORTUNE)
+                            )))
+                        .when(silkTouch.invert()))
+            );
+        })
         .register();
 
     static {
