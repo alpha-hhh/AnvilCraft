@@ -108,6 +108,10 @@ public class AnvilCraftServerConfig {
     @BoundedDiscrete(max = 20, min = 1)
     public int heliostatsDetectionInterval = 4;
 
+    @Comment("Working interval of mineral fountain")
+    @BoundedDiscrete(min = 2, max = 1200)
+    public int mineralFountainInterval = 20;
+
     @Comment("Giant anvil maxCount fall damage")
     @BoundedDiscrete(max = 100, min = 0)
     public int giantAnvilFallDamageMax = 40;
@@ -156,9 +160,6 @@ public class AnvilCraftServerConfig {
 
     @Comment("Pushing or pulling a sliding rail will chain to other rails")
     public boolean slidingRailStickToEachOther = false;
-
-    @Comment("Whether to clean fluid after updating Menger Sponge")
-    public boolean cleanFluidAfterUpdateMengerSponge = false;
 
     @Comment("The max size of the entries in multiphases' recover station")
     public int multiphaseRecoverMaxSize = 20;

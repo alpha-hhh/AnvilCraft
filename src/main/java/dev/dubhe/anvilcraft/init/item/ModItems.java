@@ -66,6 +66,8 @@ import dev.dubhe.anvilcraft.item.RoyalPickaxeItem;
 import dev.dubhe.anvilcraft.item.RoyalShovelItem;
 import dev.dubhe.anvilcraft.item.RoyalSteelIngotItem;
 import dev.dubhe.anvilcraft.item.RoyalSwordItem;
+import dev.dubhe.anvilcraft.item.RubyItem;
+import dev.dubhe.anvilcraft.item.SapphireItem;
 import dev.dubhe.anvilcraft.item.SeedsPackItem;
 import dev.dubhe.anvilcraft.item.SpectralSlingshotItem;
 import dev.dubhe.anvilcraft.item.StructureDiskItem;
@@ -793,11 +795,11 @@ public class ModItems {
         .tag(ItemTags.BEACON_PAYMENT_ITEMS, Tags.Items.GEMS, ModItemTags.GEMS_TOPAZ)
         .recipe(RegistrumItemRecipeLoader::topaz)
         .register();
-    public static final ItemEntry<Item> RUBY = REGISTRUM.item("ruby", Item::new)
+    public static final ItemEntry<RubyItem> RUBY = REGISTRUM.item("ruby", RubyItem::new)
         .tag(ItemTags.BEACON_PAYMENT_ITEMS, Tags.Items.GEMS, ModItemTags.GEMS_RUBY)
         .recipe(RegistrumItemRecipeLoader::ruby)
         .register();
-    public static final ItemEntry<Item> SAPPHIRE = REGISTRUM.item("sapphire", Item::new)
+    public static final ItemEntry<SapphireItem> SAPPHIRE = REGISTRUM.item("sapphire", SapphireItem::new)
         .tag(ItemTags.BEACON_PAYMENT_ITEMS, Tags.Items.GEMS, ModItemTags.GEMS_SAPPHIRE)
         .recipe(RegistrumItemRecipeLoader::sapphire)
         .register();
@@ -951,6 +953,12 @@ public class ModItems {
         .tag(ModItemTags.VOID_RESISTANT)
         .recipe(RegistrumItemRecipeLoader::voidMatter)
         .register();
+    public static final ItemEntry<Item> EXCITED_STATE_VOID_MATTER = REGISTRUM.item("excited_state_void_matter", Item::new)
+        .properties(properties -> properties.stacksTo(16)
+            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true))
+        .tag(ModItemTags.VOID_RESISTANT)
+        .recipe(RegistrumItemRecipeLoader::excitedStateVoidMatter)
+        .register();
     public static final ItemEntry<Item> EARTH_CORE_SHARD = REGISTRUM.item("earth_core_shard", Item::new)
         .initialProperties(() -> new Item.Properties().fireResistant())
         .recipe(RegistrumItemRecipeLoader::earthCoreShard)
@@ -1000,6 +1008,18 @@ public class ModItems {
         .initialProperties(() -> new Item.Properties().fireResistant())
         .tag(ModItemTags.EXPLOSION_PROOF)
         .recipe(RegistrumItemRecipeLoader::penroseSphereComponent)
+        .register();
+
+    public static final ItemEntry<Item> MATTER_DECOMPRESSOR_COMPONENT = REGISTRUM.item("matter_decompressor_component", Item::new)
+        .initialProperties(() -> new Item.Properties().fireResistant())
+        .tag(ModItemTags.EXPLOSION_PROOF)
+        .recipe(RegistrumItemRecipeLoader::matterDecompressorComponent)
+        .register();
+
+    public static final ItemEntry<Item> WORMHOLE_STABILIZER_COMPONENT = REGISTRUM.item("wormhole_stabilizer_component", Item::new)
+        .initialProperties(() -> new Item.Properties().fireResistant())
+        .tag(ModItemTags.EXPLOSION_PROOF)
+        .recipe(RegistrumItemRecipeLoader::wormholeStabilizerComponent)
         .register();
 
     public static final ItemEntry<SuperHeavyItem> NEUTRONIUM_INGOT = REGISTRUM.item("neutronium_ingot", SuperHeavyItem::new)
