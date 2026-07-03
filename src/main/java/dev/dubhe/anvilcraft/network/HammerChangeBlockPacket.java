@@ -5,13 +5,17 @@ import dev.anvilcraft.lib.v2.network.packet.IPacket;
 import dev.anvilcraft.lib.v2.network.packet.IServerboundPacket;
 import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.event.HammerChangeBlockEvent;
+import dev.dubhe.anvilcraft.block.BlockComparatorBlock;
 import dev.dubhe.anvilcraft.block.ChuteBlock;
+import dev.dubhe.anvilcraft.init.ModSoundEvents;
 import dev.dubhe.anvilcraft.item.AnvilHammerItem;
 import dev.dubhe.anvilcraft.util.StateUtil;
+import dev.dubhe.anvilcraft.util.TriggerUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -82,5 +86,23 @@ public record HammerChangeBlockPacket(BlockPos pos, BlockState state) implements
             }
         }
         level.setBlock(this.pos, this.state, Block.UPDATE_ALL_IMMEDIATE);
+        // 铁砧锤完成方块旋转后播放旋转音效
+        level.playSound(
+            null,
+            this.pos,
+            ModSoundEvents.ANVIL_HAMMER_ROTATE_BLOCK.get(),
+            SoundSource.BLOCKS,
+            2.0f,
+            1.0f
+        );
+        // 咸鱼翻身：将方块比较器从任意方向的 Y 状态翻转到 X 或 Z 状态时触发
+        if (blockState.getBlock() instanceof BlockComparatorBlock
+            && this.state.getBlock() instanceof BlockComparatorBlock) {
+            Direction.Axis oldAxis = blockState.getValue(BlockComparatorBlock.FACING_WITH_AXIS).getAxis();
+            Direction.Axis newAxis = this.state.getValue(BlockComparatorBlock.FACING_WITH_AXIS).getAxis();
+            if (oldAxis == Direction.Axis.Y && newAxis != Direction.Axis.Y) {
+                TriggerUtil.blockComparatorTurnOver(level, this.pos);
+            }
+        }
     }
 }

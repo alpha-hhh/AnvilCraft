@@ -13,11 +13,14 @@ import dev.dubhe.anvilcraft.data.provider.ModLootModifierProvider;
 import dev.dubhe.anvilcraft.data.provider.ModLootTableProvider;
 import dev.dubhe.anvilcraft.data.provider.ModParticleDescriptionProvider;
 import dev.dubhe.anvilcraft.data.provider.ModPoiTagProvider;
+import dev.dubhe.anvilcraft.data.provider.ModSoundDefinitionsProvider;
 import dev.dubhe.anvilcraft.data.recipe.RecipeHandler;
 import dev.dubhe.anvilcraft.data.tags.TagsHandler;
+import dev.dubhe.anvilcraft.init.ModRegistries;
 import dev.dubhe.anvilcraft.init.block.ModMultiblockDefinitions;
 import dev.dubhe.anvilcraft.init.enchantment.ModEnchantments;
 import dev.dubhe.anvilcraft.init.entity.ModDamageTypes;
+import dev.dubhe.anvilcraft.init.item.ModAmuletDefinitions;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
@@ -52,6 +55,7 @@ public class AnvilCraftDatagen {
         generator.addProvider(event.includeServer(), new ModDamageTypeTagProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModLootModifierProvider(packOutput, lookupProvider, AnvilCraft.MOD_ID));
         generator.addProvider(event.includeClient(), new ModParticleDescriptionProvider(packOutput, existingFileHelper));
+        generator.addProvider(event.includeClient(), new ModSoundDefinitionsProvider(packOutput, existingFileHelper));
 
         IntegrationHook.setEvent(event);
         AnvilCraft.getINTEGRATION_MANAGER().loadAllDataIntegrations();
@@ -65,6 +69,7 @@ public class AnvilCraftDatagen {
         genInit.add(Registries.ENCHANTMENT, ModEnchantments::bootstrap);
         genInit.add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
         genInit.add(LibRegistries.DEFINITIONS_KEY, ModMultiblockDefinitions::bootstrap);
+        genInit.add(ModRegistries.AMULET_DEF_KEY, ModAmuletDefinitions::bootstrap);
 
         genInit.addDependency(ProviderType.RECIPE, ProviderType.DYNAMIC);
 

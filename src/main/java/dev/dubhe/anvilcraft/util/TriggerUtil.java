@@ -160,4 +160,36 @@ public class TriggerUtil {
             }
         }
     }
+
+    public static void blockComparatorTurnOver(Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            for (ServerPlayer player : PlayerUtil.searchPlayerByPos(level, pos, 5)) {
+                ModCriterionTriggers.BLOCK_COMPARATOR_TURN_OVER.get().trigger(player);
+            }
+        }
+    }
+
+    public static void pipeConnectContainers(Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            for (ServerPlayer player : PlayerUtil.searchPlayerByPos(level, pos, 5)) {
+                ModCriterionTriggers.PIPE_CONNECT_CONTAINERS.get().trigger(player);
+            }
+        }
+    }
+
+    public static void voidEnergyCollectorWorking(Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            for (ServerPlayer player : PlayerUtil.searchPlayerByPos(level, pos, 7)) {
+                ModCriterionTriggers.VOID_ENERGY_COLLECTOR_WORKING.get().trigger(player);
+            }
+        }
+    }
+
+    public static void multiBlockForm(Level level, BlockPos pos) {
+        if (!level.isClientSide) {
+            for (ServerPlayer player : PlayerUtil.searchPlayerByPos(level, pos, 7)) {
+                ModCriterionTriggers.MULTI_BLOCK_FORM.get().trigger(player);
+            }
+        }
+    }
 }

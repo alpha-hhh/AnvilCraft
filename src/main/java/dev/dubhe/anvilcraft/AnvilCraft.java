@@ -31,7 +31,9 @@ import dev.dubhe.anvilcraft.init.command.ModCommands;
 import dev.dubhe.anvilcraft.init.enchantment.ModEnchantmentEffectComponents;
 import dev.dubhe.anvilcraft.init.enchantment.ModEnchantmentEffects;
 import dev.dubhe.anvilcraft.init.entity.ModEntities;
+import dev.dubhe.anvilcraft.init.entity.ModEntitySubPredicates;
 import dev.dubhe.anvilcraft.init.entity.ModVillagers;
+import dev.dubhe.anvilcraft.init.item.ModAmuletDefinitionTypes;
 import dev.dubhe.anvilcraft.init.item.ModAmuletTypes;
 import dev.dubhe.anvilcraft.init.item.ModComponents;
 import dev.dubhe.anvilcraft.init.item.ModCustomDataComponents;
@@ -45,6 +47,7 @@ import dev.dubhe.anvilcraft.init.loot.ModLootModifiers;
 import dev.dubhe.anvilcraft.init.recipe.ModRecipeInits;
 import dev.dubhe.anvilcraft.init.recipe.ModRecipeTypes;
 import dev.dubhe.anvilcraft.init.recipe.ModResultModifierTypes;
+import dev.dubhe.anvilcraft.item.DiskItem;
 import dev.dubhe.anvilcraft.recipe.anvil.cache.RecipeCaches;
 import dev.dubhe.anvilcraft.util.ModInteractionMap;
 import lombok.Getter;
@@ -66,13 +69,15 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nullable;
+
 @Mod(AnvilCraft.MOD_ID)
 public class AnvilCraft {
     public static final String MOD_ID = "anvilcraft";
     public static final String MOD_NAME = "AnvilCraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-    public static IEventBus MOD_BUS = null;
+    public static @Nullable IEventBus MOD_BUS = null;
     public static final AnvilCraftServerConfig CONFIG = ConfigManager.register(AnvilCraft.MOD_ID, AnvilCraftServerConfig::new);
     public static final AnvilCraftClientConfig CLIENT_CONFIG = ConfigManager.register(AnvilCraft.MOD_ID, AnvilCraftClientConfig::new);
 
@@ -112,6 +117,8 @@ public class AnvilCraft {
         ModLootModifiers.register(modEventBus);
         TeslaFilter.init();
         ModAmuletTypes.register(modEventBus);
+        ModAmuletDefinitionTypes.register(modEventBus);
+        ModEntitySubPredicates.register(modEventBus);
         // datagen
         AnvilCraftDatagen.init();
 
@@ -136,6 +143,7 @@ public class AnvilCraft {
         NeoForge.EVENT_BUS.addListener(AnvilCraft::registerCommand);
         NeoForge.EVENT_BUS.addListener(AnvilCraft::addReloadListeners);
         NeoForge.EVENT_BUS.addListener(AnvilCraft::addItemTooltips);
+        NeoForge.EVENT_BUS.addListener(DiskItem::onBlockPlaced);
 
         eventBus.addListener(AnvilCraft::registerPayload);
         eventBus.addListener(AnvilCraft::loadComplete);
