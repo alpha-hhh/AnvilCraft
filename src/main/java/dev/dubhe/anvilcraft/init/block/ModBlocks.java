@@ -109,7 +109,6 @@ import dev.dubhe.anvilcraft.block.PowerConverterSmallBlock;
 import dev.dubhe.anvilcraft.block.PropelPiston;
 import dev.dubhe.anvilcraft.block.PulseGeneratorBlock;
 import dev.dubhe.anvilcraft.block.RadioactiveBlock;
-import dev.dubhe.anvilcraft.block.RedstoneComputerBlock;
 import dev.dubhe.anvilcraft.block.ReinforcedConcreteBlock;
 import dev.dubhe.anvilcraft.block.RemoteTransmissionPoleBlock;
 import dev.dubhe.anvilcraft.block.ResentfulAmberBlock;
@@ -305,7 +304,7 @@ public class ModBlocks {
         .properties((properties) -> properties.stacksTo(16))
         .build()
         .blockstate(DataGenUtil::noExtraModelOrState)
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+        .tag(ModBlockTags.GIANT_ANVIL, BlockTags.MINEABLE_WITH_PICKAXE)
         .register();
 
     public static final BlockEntry<? extends Block> MAGNET_BLOCK = REGISTRUM.block("magnet_block", MagnetBlock::new)
@@ -1287,66 +1286,6 @@ public class ModBlocks {
         .tag(BlockTags.MINEABLE_WITH_PICKAXE)
         .simpleItem()
         .recipe(RegistrumBlockRecipeLoader::advancedComparator)
-        .register();
-
-    public static final BlockEntry<RedstoneComputerBlock> REDSTONE_COMPUTER = REGISTRUM.block(
-            "redstone_computer",
-            RedstoneComputerBlock::new
-        )
-        .properties(
-            properties ->
-                properties.strength(3.0F, 3.5F)
-                    .sound(SoundType.METAL)
-                    .noOcclusion()
-                    .isRedstoneConductor(ModBlocks::never)
-        )
-        .blockstate((ctx, provider) -> {
-            ModelFile redstoneComputer = new ModelFile.ExistingModelFile(
-                ctx.getId().withPrefix("block/"),
-                provider.models().existingFileHelper
-            );
-            ModelFile redstoneComputerOn = new ModelFile.ExistingModelFile(
-                ctx.getId().withPrefix("block/").withSuffix("_on"),
-                provider.models().existingFileHelper
-            );
-
-            provider.getVariantBuilder(ctx.get())
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.SOUTH)
-                .with(RedstoneComputerBlock.POWERED, false)
-                .addModels(new ConfiguredModel(redstoneComputer))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.WEST)
-                .with(RedstoneComputerBlock.POWERED, false)
-                .addModels(new ConfiguredModel(redstoneComputer, 0, 90, false))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.NORTH)
-                .with(RedstoneComputerBlock.POWERED, false)
-                .addModels(new ConfiguredModel(redstoneComputer, 0, 180, false))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.EAST)
-                .with(RedstoneComputerBlock.POWERED, false)
-                .addModels(new ConfiguredModel(redstoneComputer, 0, 270, false))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.SOUTH)
-                .with(RedstoneComputerBlock.POWERED, true)
-                .addModels(new ConfiguredModel(redstoneComputerOn))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.WEST)
-                .with(RedstoneComputerBlock.POWERED, true)
-                .addModels(new ConfiguredModel(redstoneComputerOn, 0, 90, false))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.NORTH)
-                .with(RedstoneComputerBlock.POWERED, true)
-                .addModels(new ConfiguredModel(redstoneComputerOn, 0, 180, false))
-                .partialState()
-                .with(RedstoneComputerBlock.FACING, Direction.EAST)
-                .with(RedstoneComputerBlock.POWERED, true)
-                .addModels(new ConfiguredModel(redstoneComputerOn, 0, 270, false));
-        })
-        .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-        .simpleItem()
-        .recipe(RegistrumBlockRecipeLoader::redstoneComputer)
         .register();
 
     public static final BlockEntry<PropelPiston> PROPEL_PISTON = REGISTRUM.block("propel_piston", PropelPiston::new)
@@ -4158,7 +4097,7 @@ public class ModBlocks {
     public static final BlockEntry<? extends StairBlock> PLYWOOD_STAIRS = REGISTRUM
         .block("plywood_stairs", (properties) -> new StairBlock(ModBlocks.PLYWOOD_BLOCK.getDefaultState(), properties))
         .initialProperties(PLYWOOD_BLOCK::get)
-        .tag(BlockTags.MINEABLE_WITH_AXE)
+        .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.STAIRS, BlockTags.WOODEN_STAIRS)
         .blockstate((ctx, provider) -> {
             provider.stairsBlock(
                 ctx.get(),
@@ -4167,13 +4106,15 @@ public class ModBlocks {
                 AnvilCraft.of("block/plywood")
             );
         })
-        .simpleItem()
+        .item()
+        .tag(ItemTags.STAIRS, ItemTags.WOODEN_STAIRS)
+        .build()
         .register();
 
     public static final BlockEntry<? extends SlabBlock> PLYWOOD_SLAB = REGISTRUM
         .block("plywood_slab", SlabBlock::new)
         .initialProperties(PLYWOOD_BLOCK::get)
-        .tag(BlockTags.MINEABLE_WITH_AXE)
+        .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.SLABS, BlockTags.WOODEN_SLABS)
         .blockstate((ctx, provider) -> {
             provider.slabBlock(
                 ctx.get(),
@@ -4183,7 +4124,9 @@ public class ModBlocks {
                 AnvilCraft.of("block/plywood")
             );
         })
-        .simpleItem()
+        .item()
+        .tag(ItemTags.SLABS, ItemTags.WOODEN_SLABS)
+        .build()
         .register();
 
     public static final BlockEntry<Block> ANCIENT_SEA_REEF = REGISTRUM

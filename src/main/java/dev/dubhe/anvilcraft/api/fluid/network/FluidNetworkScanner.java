@@ -1,5 +1,6 @@
 package dev.dubhe.anvilcraft.api.fluid.network;
 
+import dev.dubhe.anvilcraft.api.fluid.CauldronFluidHandler;
 import dev.dubhe.anvilcraft.block.entity.fluid.ControlValveBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.fluid.PipeCheckValveBlockEntity;
 import dev.dubhe.anvilcraft.block.entity.fluid.PumpBlockEntity;
@@ -49,7 +50,8 @@ public final class FluidNetworkScanner {
 
     /** 判断某位置是否为流体容器（提供 IFluidHandler 且非管道部件）。供管理器剔除失效容器用。 */
     public static boolean isContainer(Level level, BlockPos pos) {
-        return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, null) != null
+        return (level.getCapability(Capabilities.FluidHandler.BLOCK, pos, null) != null
+            || CauldronFluidHandler.isCauldron(level, pos))
             && !isPipePart(level.getBlockState(pos));
     }
 
@@ -85,6 +87,8 @@ public final class FluidNetworkScanner {
         if (isPipePart(level.getBlockState(pos))) {
             return null;
         }
+        IFluidHandler cauldron = CauldronFluidHandler.create(level, pos);
+        if (cauldron != null) return cauldron;
         return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, sideToPipe);
     }
 
@@ -234,7 +238,13 @@ public final class FluidNetworkScanner {
     }
 
     private static void enqueuePart(BlockPos pos, int phi, Map<BlockPos, Integer> potential, Deque<BlockPos> queue) {
-        if (potential.containsKey(pos)) {
+        Integer old = potential.get(pos);
+        if (old != null) {
+            // 取最小势场：当节点通过多条路径可达时（如有泵支路和自然支路），
+            // 使用较低的势场值，防止泵的输入侧偏高势场通过共享节点泄露到其他支路
+            if (phi < old) {
+                potential.put(pos.immutable(), phi);
+            }
             return;
         }
         potential.put(pos.immutable(), phi);
@@ -245,9 +255,6 @@ public final class FluidNetworkScanner {
         Level level, BlockPos pumpPos, BlockState pumpState, BlockPos fromPos,
         Map<BlockPos, Integer> potential, Deque<BlockPos> queue
     ) {
-        if (potential.containsKey(pumpPos)) {
-            return;
-        }
         Direction outputDir = pumpState.getValue(PumpBlock.ORIENTATION).getDirection();
         int fromPhi = potential.get(fromPos);
         int lift = pumpHalfLift(level, pumpPos);
@@ -257,6 +264,13 @@ public final class FluidNetworkScanner {
         } else if (fromPos.equals(pumpPos.relative(outputDir.getOpposite()))) {
             pumpPhi = fromPhi + lift;      // fromPos 在输入侧：fromPhi = pumpPhi - lift
         } else {
+            return;
+        }
+        Integer old = potential.get(pumpPos);
+        if (old != null) {
+            if (pumpPhi < old) {
+                potential.put(pumpPos.immutable(), pumpPhi);
+            }
             return;
         }
         potential.put(pumpPos.immutable(), pumpPhi);

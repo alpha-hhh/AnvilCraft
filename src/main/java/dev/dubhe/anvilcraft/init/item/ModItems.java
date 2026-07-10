@@ -101,8 +101,8 @@ import dev.dubhe.anvilcraft.item.weapon.TeslaGunItem;
 import dev.dubhe.anvilcraft.recipe.JewelCraftingRecipe;
 import dev.dubhe.anvilcraft.util.DataGenUtil;
 import dev.dubhe.anvilcraft.util.registrater.ModelProviderUtil;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceKey;
@@ -276,7 +276,7 @@ public class ModItems {
         .register();
     public static final ItemEntry<EmberAnvilHammerItem> EMBER_ANVIL_HAMMER = REGISTRUM.item("ember_anvil_hammer", EmberAnvilHammerItem::new)
         .recipe(RegistrumItemRecipeLoader::emberAnvilHammer)
-        .tag(ItemTags.MACE_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, ModItemTags.ANVIL_HAMMER)
+        .tag(ItemTags.MACE_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ModItemTags.ANVIL_HAMMER)
         .properties(properties -> properties.durability(2031))
         .model(DataGenUtil::noExtraModelOrState)
         .register();
@@ -326,6 +326,7 @@ public class ModItems {
             ItemTags.MACE_ENCHANTABLE,
             ItemTags.TRIDENT_ENCHANTABLE,
             ItemTags.SWORD_ENCHANTABLE,
+            ItemTags.WEAPON_ENCHANTABLE,
             ModItemTags.HEAVY_HALBERD,
             ModItemTags.EXPLOSION_PROOF
         )
@@ -338,6 +339,7 @@ public class ModItems {
             ItemTags.MACE_ENCHANTABLE,
             ItemTags.TRIDENT_ENCHANTABLE,
             ItemTags.SWORD_ENCHANTABLE,
+            ItemTags.WEAPON_ENCHANTABLE,
             ModItemTags.HEAVY_HALBERD,
             ModItemTags.EXPLOSION_PROOF
         )
@@ -350,6 +352,7 @@ public class ModItems {
             ItemTags.MACE_ENCHANTABLE,
             ItemTags.TRIDENT_ENCHANTABLE,
             ItemTags.SWORD_ENCHANTABLE,
+            ItemTags.WEAPON_ENCHANTABLE,
             ModItemTags.HEAVY_HALBERD,
             ModItemTags.EXPLOSION_PROOF
         )
@@ -1044,7 +1047,7 @@ public class ModItems {
         .register();
 
     private static Object2ObjectMap<Color, ItemEntry<BucketItem>> registerAllCementBuckets() {
-        Object2ObjectMap<Color, ItemEntry<BucketItem>> map = new Object2ObjectOpenHashMap<>();
+        Object2ObjectMap<Color, ItemEntry<BucketItem>> map = new Object2ObjectLinkedOpenHashMap<>();
         for (Color color : Color.values()) {
             var entry = registerCementBucket(color);
             map.put(color, entry);

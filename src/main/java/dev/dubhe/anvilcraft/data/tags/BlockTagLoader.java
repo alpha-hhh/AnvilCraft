@@ -299,13 +299,21 @@ public class BlockTagLoader {
             .addTag(BlockTags.WALL_CORALS)
             .addTag(BlockTags.CORAL_PLANTS);
 
+        provider.addTag(ModBlockTags.BROKEN_CRYSTALS_CLUSTERS)
+            .add(findResourceKey(Blocks.AMETHYST_CLUSTER));
+
         provider.addTag(ModBlockTags.SPECTRAL_CAN_THROUGH)
             .addTag(Tags.Blocks.GLASS_BLOCKS)
             .addTag(Tags.Blocks.GLASS_PANES)
             .addTag(BlockTags.LEAVES)
             .add(findResourceKey(Blocks.IRON_BARS))
             .add(findResourceKey(Blocks.MANGROVE_ROOTS))
-            .add(findResourceKey(Blocks.COPPER_GRATE));
+            .add(findResourceKey(Blocks.COPPER_GRATE))
+            .addOptionalTag(ModBlockTags.AE2_GLASS_CABLE)
+            .addOptionalTag(ModBlockTags.AE2_COVERED_CABLE)
+            .addOptionalTag(ModBlockTags.AE2_SMART_CABLE)
+            .addOptionalTag(ModBlockTags.AE2_COVERED_DENSE_CABLE)
+            .addOptionalTag(ModBlockTags.AE2_SMART_DENSE_CABLE);
 
         provider.addTag(ModBlockTags.HEATABLE_BLOCKS)
             .addTag(ModBlockTags.STORAGE_BLOCKS_TUNGSTEN)

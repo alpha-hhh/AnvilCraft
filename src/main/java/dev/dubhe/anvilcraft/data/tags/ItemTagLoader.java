@@ -216,7 +216,9 @@ public class ItemTagLoader {
 
         provider.addTag(ModItemTags.SUPER_HEATING_BOOST_PRODUCTION)
             .addTag(Tags.Items.RAW_MATERIALS)
-            .addTag(Tags.Items.ORES);
+            .addTag(Tags.Items.ORES)
+            .add(findResourceKey(Items.SEA_PICKLE))
+            .add(findResourceKey(Items.CACTUS));
 
         provider.addTag(ModItemTags.RAW_MUTTON)
             .add(findResourceKey(Items.MUTTON));
@@ -232,6 +234,24 @@ public class ItemTagLoader {
 
         provider.addTag(ModItemTags.RAW_RABBIT)
             .add(findResourceKey(Items.RABBIT));
+
+        provider.addTag(ModItemTags.DISINTEGRATION_SUPPORTED)
+            .addTag(ItemTags.MINING_LOOT_ENCHANTABLE)
+            .add(ModItems.FROST_METAL_PICKAXE.getKey())
+            .add(ModItems.FROST_METAL_AXE.getKey())
+            .add(ModItems.FROST_METAL_SHOVEL.getKey())
+            .add(ModItems.FROST_METAL_HOE.getKey())
+            .add(ModItems.FROST_METAL_SWORD.getKey())
+            .add(ModItems.FROST_METAL_HEAVY_HALBERD.getKey());
+
+        provider.addTag(ModItemTags.SMELTING_SUPPORTED)
+            .addTag(ItemTags.MINING_LOOT_ENCHANTABLE)
+            .add(ModItems.EMBER_METAL_PICKAXE.getKey())
+            .add(ModItems.EMBER_METAL_AXE.getKey())
+            .add(ModItems.EMBER_METAL_SHOVEL.getKey())
+            .add(ModItems.EMBER_METAL_HOE.getKey())
+            .add(ModItems.EMBER_METAL_SWORD.getKey())
+            .add(ModItems.EMBER_METAL_HEAVY_HALBERD.getKey());
     }
 
     private static ResourceKey<Item> findResourceKey(Item item) {

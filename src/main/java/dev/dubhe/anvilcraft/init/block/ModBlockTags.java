@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 public class ModBlockTags {
 
     private static final String MEKANISM_MODID = "mekanism";
+    private static final String AE2_MODID = "ae2";
     // mod tags
     public static final TagKey<Block> UNDER_CAULDRON = bind("under_cauldron");
     public static final TagKey<Block> MAGNET = bind("magnet");
@@ -43,6 +44,7 @@ public class ModBlockTags {
     public static final TagKey<Block> ANVIL_TIER_1 = bind("anvil_tier_1");
     public static final TagKey<Block> ANVIL_TIER_2 = bind("anvil_tier_2");
     public static final TagKey<Block> ANVIL_TIER_3 = bind("anvil_tier_3");
+    public static final TagKey<Block> GIANT_ANVIL = bind("giant_anvil");
     public static final TagKey<Block> POWER_CONVERTER = bind("power_converter");
     public static final TagKey<Block> SLIDING_RAIL_STOP_LIKE = bind("sliding_rail_stop_like");
 
@@ -106,8 +108,16 @@ public class ModBlockTags {
 
     public static final TagKey<Block> FELLING_APPLICABLE = bind("felling_applicable");
     public static final TagKey<Block> CLEANING_APPLICABLE = bind("cleaning_applicable");
+    public static final TagKey<Block> BROKEN_CRYSTALS_CLUSTERS = bind("broken_crystals_clusters");
 
     public static final TagKey<Block> COLLISION_IMMUNE = bind("collision_immune");
+
+    // ae2 tags
+    public static final TagKey<Block> AE2_GLASS_CABLE = bindAe2("glass_cable");
+    public static final TagKey<Block> AE2_COVERED_CABLE = bindAe2("covered_cable");
+    public static final TagKey<Block> AE2_SMART_CABLE = bindAe2("smart_cable");
+    public static final TagKey<Block> AE2_COVERED_DENSE_CABLE = bindAe2("covered_dense_cable");
+    public static final TagKey<Block> AE2_SMART_DENSE_CABLE = bindAe2("smart_dense_cable");
 
     // mekanism tags
     public static final TagKey<Block> MEKANISM_CARDBOARD_BOX_BLACKLIST = bindMekanism("cardboard_blacklist");
@@ -116,8 +126,14 @@ public class ModBlockTags {
         return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", id));
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static TagKey<Block> bindMekanism(String id) {
         return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MEKANISM_MODID, id));
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private static TagKey<Block> bindAe2(String id) {
+        return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(AE2_MODID, id));
     }
 
     private static TagKey<Block> bind(String id) {
