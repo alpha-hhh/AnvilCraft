@@ -2154,9 +2154,10 @@ public class RegistrumBlockRecipeLoader {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ctx.get().asItem(), 2)
             .pattern("PCP")
             .pattern("P P")
-            .pattern("   ")
+            .pattern(" M ")
             .define('P', Blocks.PISTON)
             .define('C', ModBlocks.PIPE_STRAIGHT.asItem())
+            .define('M', ModBlocks.MAGNETO_ELECTRIC_CORE_BLOCK)
             .group(ctx.getId().toString())
             .unlockedBy(
                 AnvilCraftDatagen.hasItem(Blocks.PISTON.asItem()),
@@ -2166,6 +2167,15 @@ public class RegistrumBlockRecipeLoader {
                 AnvilCraftDatagen.hasItem(ModBlocks.PIPE_STRAIGHT.asItem()),
                 RegistrumRecipeProvider.has(ModBlocks.PIPE_STRAIGHT)
             )
+            .save(provider);
+    }
+
+    public static <T extends Block> void redstoneWire(DataGenContext<Block, T> ctx, RegistrumRecipeProvider provider) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ctx.get(), 4)
+            .pattern("CRC")
+            .define('C', ModItemTags.COPPER_NUGGETS)
+            .define('R', Items.REDSTONE)
+            .unlockedBy(AnvilCraftDatagen.hasItem(Items.REDSTONE), RegistrumRecipeProvider.has(Items.REDSTONE))
             .save(provider);
     }
 }

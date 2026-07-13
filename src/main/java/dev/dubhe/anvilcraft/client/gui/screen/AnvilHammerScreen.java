@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import dev.anvilcraft.lib.v2.util.MathUtil;
+import dev.dubhe.anvilcraft.AnvilCraft;
 import dev.dubhe.anvilcraft.api.hammer.IHasHammerEffect;
 import dev.dubhe.anvilcraft.api.input.IMouseHandlerExtension;
 import dev.dubhe.anvilcraft.block.multipart.FlexibleMultiPartBlock;
@@ -44,6 +45,7 @@ import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.ComparatorBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -110,6 +112,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
     }
 
     private final Minecraft minecraft = Minecraft.getInstance();
+    private final float radialMenuScale = AnvilCraft.CLIENT_CONFIG.anvilHammerRadialMenuScale;
     private final BlockPos targetBlockPos;
     private final Property<?> property;
     private final List<BlockState> possibleStates;
@@ -156,7 +159,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             float rotation = degreeEachRotation * i;
             Vector2f rotated = MathUtil.rotationDegrees(ROTATION_START, rotation)
                 .mul(-1, 1)
-                .mul(RADIUS)
+                .mul(RADIUS * this.radialMenuScale)
                 .add(centerX, centerY);
             try {
                 float detectionStart = (float) (Math.toRadians(rotation - degreeEachRotation / 2f) + Math.PI);
@@ -198,7 +201,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
         this.targetAngle = selected.angle;
         this.selectionEffectPosFromCenter = MathUtil.rotate(
             MathUtil.copy(ROTATION_START)
-                .mul(RADIUS),
+                .mul(RADIUS * this.radialMenuScale),
             -this.targetAngle
         ).mul(1, -1);
     }
@@ -241,7 +244,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             (float) mouseX - screenCenterX,
             (float) mouseY - screenCenterY
         );
-        if (cursorVec2.length() < IGNORE_CURSOR_MOVE_LENGTH) {
+        if (cursorVec2.length() < IGNORE_CURSOR_MOVE_LENGTH * this.radialMenuScale) {
             return true;
         }
         Vector2f rotationStart = new Vector2f(0, 1);
@@ -287,7 +290,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
     ) {
         final float partialTick = minecraft.getTimer().getGameTimeDeltaPartialTick(true);
         poseStack.pushPose();
-        poseStack.translate(-7, 7, 0);
+        poseStack.translate(-7 * this.radialMenuScale, 7 * this.radialMenuScale, 0);
         poseStack.translate(x, y, z);
         poseStack.scale(scale, scale, scale);
         poseStack.mulPose(new Matrix4f().scaling(1, -1, 1));
@@ -371,8 +374,8 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             this.width / 2f,
             this.height / 2f,
             RING_COLOR,
-            RING_INNER_DIAMETER * progress,
-            RING_OUTER_DIAMETER * progress
+            RING_INNER_DIAMETER * this.radialMenuScale * progress,
+            RING_OUTER_DIAMETER * this.radialMenuScale * progress
         );
         poseStack.popPose();
         float finalProgress = progress;
@@ -390,7 +393,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
                     center.x,
                     center.y,
                     SELECTION_EFFECT_COLOR,
-                    SELECTION_EFFECT_RADIUS
+                    SELECTION_EFFECT_RADIUS * this.radialMenuScale
                 );
             });
         for (SelectionItem value : items) {
@@ -405,10 +408,10 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
                 renderRotatedBlock(
                     poseStack,
                     value.modelBlock,
-                    x + 5,
-                    y - 4,
+                    x + 5 * this.radialMenuScale,
+                    y - 4 * this.radialMenuScale,
                     100,
-                    5
+                    5 * this.radialMenuScale
                 );
             } else {
                 renderRotatedBlock(
@@ -417,7 +420,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
                     x,
                     y,
                     100,
-                    ZOOM
+                    ZOOM * this.radialMenuScale
                 );
             }
             final int textAlpha = (int) (progress * 0xff) << 24;
@@ -426,11 +429,12 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             float offsetX = 0.1f * this.width;
             float offsetY = 0.1f * this.height;
             float adjustedX = (x - offsetX) / coordinateScale;
-            float adjustedY = (y - offsetY - 20) / coordinateScale;
+            float adjustedY = (y - offsetY - 20 * this.radialMenuScale) / coordinateScale;
             poseStack.translate(offsetX, offsetY, 0);
             poseStack.scale(coordinateScale, coordinateScale, coordinateScale);
             poseStack.translate(adjustedX, adjustedY, 0);
-            poseStack.scale(TEXT_SCALE / coordinateScale, TEXT_SCALE / coordinateScale, TEXT_SCALE / coordinateScale);
+            float textScale = TEXT_SCALE * this.radialMenuScale / coordinateScale;
+            poseStack.scale(textScale, textScale, textScale);
             guiGraphics.drawCenteredString(
                 this.minecraft.font,
                 value.description,
@@ -477,8 +481,8 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             this.width / 2f,
             this.height / 2f,
             RING_COLOR,
-            RING_INNER_DIAMETER,
-            RING_OUTER_DIAMETER
+            RING_INNER_DIAMETER * this.radialMenuScale,
+            RING_OUTER_DIAMETER * this.radialMenuScale
         );
         renderSelection(guiGraphics);
         for (SelectionItem value : this.items) {
@@ -488,10 +492,10 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
                 renderRotatedBlock(
                     poseStack,
                     value.modelBlock,
-                    x + 4,
-                    y - 4,
+                    x + 4 * this.radialMenuScale,
+                    y - 4 * this.radialMenuScale,
                     -100,
-                    5
+                    5 * this.radialMenuScale
                 );
             } else {
                 renderRotatedBlock(
@@ -500,7 +504,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
                     x,
                     y,
                     -100,
-                    ZOOM
+                    ZOOM * this.radialMenuScale
                 );
             }
             poseStack.pushPose();
@@ -508,12 +512,13 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             float offsetX = 0.1f * this.width;
             float offsetY = 0.1f * this.height;
             float adjustedX = (x - offsetX) / coordinateScale;
-            float adjustedY = (y - offsetY - 20) / coordinateScale;
+            float adjustedY = (y - offsetY - 20 * this.radialMenuScale) / coordinateScale;
 
             poseStack.translate(offsetX, offsetY, 0);
             poseStack.scale(coordinateScale, coordinateScale, coordinateScale);
             poseStack.translate(adjustedX, adjustedY, 0);
-            poseStack.scale(TEXT_SCALE / coordinateScale, TEXT_SCALE / coordinateScale, TEXT_SCALE / coordinateScale);
+            float textScale = TEXT_SCALE * this.radialMenuScale / coordinateScale;
+            poseStack.scale(textScale, textScale, textScale);
             guiGraphics.drawCenteredString(
                 this.minecraft.font,
                 value.description,
@@ -555,7 +560,7 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
             pos.x,
             pos.y,
             SELECTION_EFFECT_COLOR,
-            SELECTION_EFFECT_RADIUS
+            SELECTION_EFFECT_RADIUS * this.radialMenuScale
         );
     }
 
@@ -704,7 +709,8 @@ public class AnvilHammerScreen extends Screen implements IHasHammerEffect {
         if (!(block instanceof DoorBlock
               || block instanceof TrapDoorBlock
               || block instanceof FenceGateBlock
-              || block instanceof ButtonBlock)) {
+              || block instanceof ButtonBlock
+              || block instanceof ComparatorBlock)) {
             return;
         }
         state.useWithoutItem(level, this.minecraft.player, this.hitVec);
