@@ -6,7 +6,6 @@ import dev.anvilcraft.lib.v2.util.Util;
 import dev.dubhe.anvilcraft.block.PowerConverterBigBlock;
 import dev.dubhe.anvilcraft.block.PowerConverterMiddleBlock;
 import dev.dubhe.anvilcraft.block.PowerConverterSmallBlock;
-import dev.dubhe.anvilcraft.client.AnvilCraftClient;
 import dev.dubhe.anvilcraft.client.init.ModKeyMappings;
 import dev.dubhe.anvilcraft.init.block.ModBlocks;
 import dev.dubhe.anvilcraft.init.item.ModComponents;
@@ -30,7 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ItemTooltipManager {
 
@@ -56,9 +54,9 @@ public class ItemTooltipManager {
         NORMAL.put(
             ModBlocks.ROYAL_ANVIL.asItem(), """
                 Never triggers Too Expensive
-                Explosion proof, does not degrade from falling""");
-        NORMAL.put(ModBlocks.ROYAL_GRINDSTONE.asItem(), "Eliminating Curses and Punishing, Explosion proof");
-        NORMAL.put(ModBlocks.ROYAL_SMITHING_TABLE.asItem(), "Saving your Smithing Template, Explosion proof");
+                Indestructible with broad compatibility""");
+        NORMAL.put(ModBlocks.ROYAL_GRINDSTONE.asItem(), "Removes curses and enchantment penalties, Explosion proof");
+        NORMAL.put(ModBlocks.ROYAL_SMITHING_TABLE.asItem(), "Does not consume Smithing Templates, Explosion proof");
         NORMAL.put(ModBlocks.HEATER.asItem(), "Heating the block above, consumes 16 kW");
         NORMAL.put(
             ModBlocks.BURNING_HEATER.asItem(), """
@@ -89,8 +87,8 @@ public class ItemTooltipManager {
             ModBlocks.BATCH_CUTTER.asItem(),
             "Received a redstone signal and cut all internal items at once, with a power consumption of 4 kW"
         );
-        NORMAL.put(ModItems.ROYAL_STEEL_INGOT.get(), "Steel infused with gem powerf");
-        NORMAL.put(ModBlocks.ROYAL_STEEL_BLOCK.asItem(), "Steel infused with gem power, Explosion proof");
+        NORMAL.put(ModItems.ROYAL_STEEL_INGOT.get(), "A piece of iron infused with gem magic");
+        NORMAL.put(ModBlocks.ROYAL_STEEL_BLOCK.asItem(), "A large block of iron infused with gem magic, Explosion proof");
         NORMAL.put(ModBlocks.SMOOTH_ROYAL_STEEL_BLOCK.asItem(), "Royal Steel decorative block, Explosion proof");
         NORMAL.put(ModBlocks.CUT_ROYAL_STEEL_BLOCK.asItem(), "Royal Steel decorative block, Explosion proof");
         NORMAL.put(ModBlocks.CUT_ROYAL_STEEL_PILLAR.asItem(), "Royal Steel decorative block, Explosion proof");
@@ -114,45 +112,45 @@ public class ItemTooltipManager {
         NORMAL.put(ModBlocks.ITEM_COLLECTOR.asItem(), "Adjust power consumption based on range and cooling, from 2kW to 32kW");
         NORMAL.put(
             ModBlocks.EMBER_ANVIL.asItem(), """
-               High-tier with enhanced compatibility
-               Wither proof, does not degrade from falling""");
+               Enhanced compatibility with a soul seemingly hidden deep within; Anvil Looting can obtain player-only drops
+               Indestructible and Wither proof""");
         NORMAL.put(ModBlocks.EMBER_GRINDSTONE.asItem(), "Extracts enchantments onto books, Wither proof");
         NORMAL.put(ModBlocks.EMBER_SMITHING_TABLE.asItem(), "All-in-one combination smithing, Wither proof");
-        NORMAL.put(ModBlocks.EMBER_METAL_BLOCK.asItem(), "Netherite tempered in fire for eons, Wither proof");
+        NORMAL.put(ModBlocks.EMBER_METAL_BLOCK.asItem(), "A large block of Netherite tempered in fire for eons, Wither proof");
         NORMAL.put(ModBlocks.EMBER_GLASS.asItem(), "Ember Metal glass, Wither proof, No tools required on collect");
         NORMAL.put(ModBlocks.CUT_EMBER_METAL_BLOCK.asItem(), "Ember Metal decorative block, Wither proof");
         NORMAL.put(ModBlocks.CUT_EMBER_METAL_PILLAR.asItem(), "Ember Metal decorative block, Wither proof");
         NORMAL.put(ModBlocks.CUT_EMBER_METAL_SLAB.asItem(), "Ember Metal decorative block, Wither proof");
         NORMAL.put(ModBlocks.CUT_EMBER_METAL_STAIRS.asItem(), "Ember Metal decorative block, Wither proof");
-        NORMAL.put(ModItems.TRANSCENDIUM_INGOT.get(), "Strong interaction material sustained by magic, immune to most destruction methods");
-        NORMAL.put(ModBlocks.TRANSCENDIUM_BLOCK.asItem(), "Strong interaction material sustained by magic, immune to most destruction methods");
+        NORMAL.put(ModItems.TRANSCENDIUM_INGOT.get(), "A piece of strong-interaction matter sustained by magic, immune to most forms of destruction");
+        NORMAL.put(ModBlocks.TRANSCENDIUM_BLOCK.asItem(), "A large block of strong-interaction matter sustained by magic, immune to most forms of destruction");
         NORMAL.put(
             ModBlocks.OVERHEATED_EMBER_METAL_BLOCK.asItem(), """
-            Extreme energy broke its thermal balance
-            May degrade into Netherite upon cooling""");
-        NORMAL.put(ModItems.EMBER_METAL_INGOT.get(), "Netherite tempered in fire for eons");
-        NORMAL.put(ModItems.FROST_METAL_INGOT.get(), "Special steel tempered in extreme cold for eons");
+               Extreme heat has broken its mass-energy balance; injecting mass will transform it into Transcendium
+               May degrade into Netherite upon cooling""");
+        NORMAL.put(ModItems.EMBER_METAL_INGOT.get(), "A piece of Netherite tempered in fire for eons");
+        NORMAL.put(ModItems.FROST_METAL_INGOT.get(), "A piece of Royal Steel tempered in extreme cold for eons");
         NORMAL.put(ModItems.MAGNET_INGOT.get(), "A magnetized iron ingot");
         NORMAL.put(ModItems.TUNGSTEN_INGOT.get(), "A heat-resistant and dense metal, material for Ancient Debris");
-        NORMAL.put(ModBlocks.TUNGSTEN_BLOCK.asItem(), "A heat-resistant and dense metal, material for Ancient Debris");
+        NORMAL.put(ModBlocks.TUNGSTEN_BLOCK.asItem(), "A large block of heat-resistant, high-density metal that can be heated to extreme temperatures");
         NORMAL.put(ModItems.TITANIUM_INGOT.get(), "A strong and lightweight metal");
-        NORMAL.put(ModBlocks.TITANIUM_BLOCK.asItem(), "A strong and lightweight metal");
+        NORMAL.put(ModBlocks.TITANIUM_BLOCK.asItem(), "A large block of strong, lightweight metal");
         NORMAL.put(ModItems.ZINC_INGOT.get(), "A lightweight metal");
-        NORMAL.put(ModBlocks.ZINC_BLOCK.asItem(), "A lightweight metal");
+        NORMAL.put(ModBlocks.ZINC_BLOCK.asItem(), "A large block of lightweight metal");
         NORMAL.put(ModItems.TIN_INGOT.get(), "A soft and corrosion-resistant metal");
-        NORMAL.put(ModBlocks.TIN_BLOCK.asItem(), "A soft and corrosion-resistant metal");
+        NORMAL.put(ModBlocks.TIN_BLOCK.asItem(), "A large block of soft, corrosion-resistant metal");
         NORMAL.put(ModItems.LEAD_INGOT.get(), "A dense and heavy metal");
-        NORMAL.put(ModBlocks.LEAD_BLOCK.asItem(), "A dense and heavy metal");
+        NORMAL.put(ModBlocks.LEAD_BLOCK.asItem(), "A large block of dense, heavy metal that absorbs radiation and slows the decay of radioactive blocks");
         NORMAL.put(ModItems.SILVER_INGOT.get(), "A highly reflective metal");
-        NORMAL.put(ModBlocks.SILVER_BLOCK.asItem(), "A highly reflective metal");
+        NORMAL.put(ModBlocks.SILVER_BLOCK.asItem(), "A large block of highly reflective metal");
         NORMAL.put(ModItems.URANIUM_INGOT.get(), "Radioactive — handle with care");
-        NORMAL.put(ModBlocks.URANIUM_BLOCK.asItem(), "Radioactive — handle with care");
+        NORMAL.put(ModBlocks.URANIUM_BLOCK.asItem(), "A large block of radioactive material that continuously releases heat but decays when multiple blocks are adjacent");
         NORMAL.put(ModItems.PLUTONIUM_INGOT.get(), "Highly radioactive — cannot be mined naturally, obtained from uranium transmutation");
-        NORMAL.put(ModBlocks.PLUTONIUM_BLOCK.asItem(), "Highly radioactive — cannot be mined naturally, obtained from uranium transmutation");
+        NORMAL.put(ModBlocks.PLUTONIUM_BLOCK.asItem(), "A large block of highly radioactive material obtained only by transmuting uranium; continuously releases heat but decays when multiple blocks are adjacent");
         NORMAL.put(ModItems.BRONZE_INGOT.get(), "A durable copper-tin alloy");
-        NORMAL.put(ModBlocks.BRONZE_BLOCK.asItem(), "A durable copper-tin alloy");
+        NORMAL.put(ModBlocks.BRONZE_BLOCK.asItem(), "A large block of durable copper-tin alloy");
         NORMAL.put(ModItems.BRASS_INGOT.get(), "A corrosion-resistant copper-zinc alloy");
-        NORMAL.put(ModBlocks.BRASS_BLOCK.asItem(), "A corrosion-resistant copper-zinc alloy");
+        NORMAL.put(ModBlocks.BRASS_BLOCK.asItem(), "A large block of corrosion-resistant copper-zinc alloy");
         NORMAL.put(ModBlocks.CUT_BRONZE_BLOCK.asItem(), "Bronze decorative block");
         NORMAL.put(ModBlocks.CUT_BRONZE_STAIRS.asItem(), "Bronze decorative block");
         NORMAL.put(ModBlocks.CUT_BRONZE_SLAB.asItem(), "Bronze decorative block");
@@ -163,20 +161,20 @@ public class ItemTooltipManager {
         NORMAL.put(ModBlocks.CUT_BRASS_SLAB.asItem(), "Brass decorative block");
         NORMAL.put(ModBlocks.CUT_BRASS_PILLAR.asItem(), "Brass decorative block");
         NORMAL.put(ModBlocks.CHISELED_BRASS_BLOCK.asItem(), "Brass decorative block");
-        NORMAL.put(ModItems.ROYAL_STEEL_NUGGET.get(), "A small piece of Royal Steel");
-        NORMAL.put(ModItems.EMBER_METAL_NUGGET.get(), "A small piece of Ember Metal");
-        NORMAL.put(ModItems.FROST_METAL_NUGGET.get(), "A small piece of Frost Metal");
-        NORMAL.put(ModItems.TRANSCENDIUM_NUGGET.get(), "A small piece of Transcendium");
-        NORMAL.put(ModItems.TUNGSTEN_NUGGET.get(), "A small piece of Tungsten, material for Ancient Debris");
+        NORMAL.put(ModItems.ROYAL_STEEL_NUGGET.get(), "A small piece of iron infused with gem magic");
+        NORMAL.put(ModItems.EMBER_METAL_NUGGET.get(), "A small piece of Netherite tempered in fire for eons");
+        NORMAL.put(ModItems.FROST_METAL_NUGGET.get(), "A small piece of Royal Steel tempered in extreme cold for eons");
+        NORMAL.put(ModItems.TRANSCENDIUM_NUGGET.get(), "A small piece of strong-interaction matter sustained by magic, immune to most forms of destruction");
+        NORMAL.put(ModItems.TUNGSTEN_NUGGET.get(), "A small piece of heat-resistant, high-density metal");
         NORMAL.put(ModItems.TITANIUM_NUGGET.get(), "A small piece of Titanium");
         NORMAL.put(ModItems.ZINC_NUGGET.get(), "A small piece of Zinc");
         NORMAL.put(ModItems.TIN_NUGGET.get(), "A small piece of Tin");
         NORMAL.put(ModItems.LEAD_NUGGET.get(), "A small piece of Lead");
         NORMAL.put(ModItems.SILVER_NUGGET.get(), "A small piece of Silver");
         NORMAL.put(ModItems.URANIUM_NUGGET.get(), "A small piece of Uranium");
-        NORMAL.put(ModItems.PLUTONIUM_NUGGET.get(), "A small piece of Plutonium");
-        NORMAL.put(ModItems.BRONZE_NUGGET.get(), "A small piece of Bronze");
-        NORMAL.put(ModItems.BRASS_NUGGET.get(), "A small piece of Brass");
+        NORMAL.put(ModItems.PLUTONIUM_NUGGET.get(), "A small piece of highly radioactive material obtained only by transmuting uranium");
+        NORMAL.put(ModItems.BRONZE_NUGGET.get(), "A small piece of durable copper-tin alloy");
+        NORMAL.put(ModItems.BRASS_NUGGET.get(), "A small piece of corrosion-resistant copper-zinc alloy");
         NORMAL.put(ModItems.TIN_CAN.asItem(), "Tin cans can be combined with any food to obtain canned food");
         NORMAL.put(ModFoodItems.CANNED_FOOD.asItem(), "Stackable instant food");
         NORMAL.put(ModItems.IONOCRAFT.asItem(), "It will float when placed in the power grid");
@@ -196,7 +194,7 @@ public class ItemTooltipManager {
         );
         NORMAL.put(
             ModBlocks.TESLA_TOWER.asItem(),
-            "Electric shock to mobs or lightning rods within a range of 8 grids, with a power consumption of 128 kW"
+            "Shocks mobs or lightning rods within 8 blocks, consumes 128 kW"
         );
         NORMAL.put(ModBlocks.ACTIVE_SILENCER.asItem(), "Eliminate selected nearby sounds");
         NORMAL.put(ModBlocks.COPPER_PRESSURE_PLATE.asItem(), "Redstone signal increases with pressing time, also a copper plate");
@@ -279,29 +277,28 @@ public class ItemTooltipManager {
         NORMAL.put(ModItems.CAPACITOR_EMPTY.asItem(), "8 MFE capacity");
         NORMAL.put(ModItems.SUPER_CAPACITOR.asItem(), "160 MFE stored");
         NORMAL.put(ModItems.SUPER_CAPACITOR_EMPTY.asItem(), "160 MFE capacity");
-        NORMAL.put(ModItems.ENERGY_WEAPON_PLATFORM.get(), "640 MFE stored, but will only inherit the result of Energy Weapon Making");
         NORMAL.put(ModItems.HEAVY_HALBERD_CORE.get(), "Material for crafting the Heavy Halberd");
         NORMAL.put(ModItems.RESONATOR_CORE.get(), "Material for crafting the Resonator");
         NORMAL.put(ModBlocks.BLACK_HOLE.asItem(), "Dev Block with intense gravitational attraction");
         NORMAL.put(ModBlocks.WHITE_HOLE.asItem(), "Dev Block with intense gravitational repulsion");
         NORMAL.put(ModBlocks.CHARGER.asItem(), "Charges items, supports manual or automated input");
         NORMAL.put(ModBlocks.DISCHARGER.asItem(), "Discharges capacitors, supports manual or automated input");
-        NORMAL.put(ModBlocks.LASER_RECEIVER.asItem(), "Generates power and output signal from received laser");
+        NORMAL.put(ModBlocks.LASER_RECEIVER.asItem(), "Receives lasers, generating power and a redstone signal based on the laser level");
         NORMAL.put(
             ModBlocks.FROST_ANVIL.asItem(), """
-            Slower enchantment penalty growth, repairs any tool with Frost Metal, free renaming
-            Explosion proof, does not degrade from falling"""
+            Slower enchantment penalty growth, repairs any item with Frost Metal, free renaming
+            Indestructible and Explosion proof"""
         );
         NORMAL.put(
             ModBlocks.TRANSCENDENCE_ANVIL.asItem(), """
-            Ignores enchantment level limits,
-            Immune to most destruction methods, does not degrade from falling""");
-        NORMAL.put(ModBlocks.TRANSCENDENCE_DECO_BLOCK.asItem(), "Transcendium decorative block, immune to most destruction methods");
-        NORMAL.put(ModBlocks.TRANSCENDENCE_DECO_OUTLINE.asItem(), "Transcendium decorative glass, immune to most destruction methods");
+            Ignores enchantment level limits, and Anvil Looting produces additional drops
+            Indestructible; its drops are also immune to most forms of destruction""");
+        NORMAL.put(ModBlocks.TRANSCENDENCE_DECO_BLOCK.asItem(), "Transcendium decorative block; its low Transcendium content means it is not indestructible");
+        NORMAL.put(ModBlocks.TRANSCENDENCE_DECO_OUTLINE.asItem(), "Transcendium decorative block; its low Transcendium content means it is not indestructible");
         NORMAL.put(ModBlocks.FROST_GRINDSTONE.asItem(), "Selectively removes individual enchantments, Explosion proof");
         NORMAL.put(ModBlocks.FROST_SMITHING_TABLE.asItem(), "Works with Permutation and Deformation smithing templates, Explosion proof");
-        NORMAL.put(ModBlocks.FROST_METAL_BLOCK.asItem(), "Special steel tempered in extreme cold for eons, Explosion proof");
-        NORMAL.put(ModBlocks.FROST_GLASS.asItem(), "Ember Metal glass, Explosion proof, No tools required on collect");
+        NORMAL.put(ModBlocks.FROST_METAL_BLOCK.asItem(), "A large block of Royal Steel tempered in extreme cold for eons, Explosion proof");
+        NORMAL.put(ModBlocks.FROST_GLASS.asItem(), "Frost Metal glass, Explosion proof, No tools required on collect");
         NORMAL.put(ModBlocks.CUT_FROST_METAL_BLOCK.asItem(), "Frost Metal decorative block, Explosion proof");
         NORMAL.put(ModBlocks.CUT_FROST_METAL_PILLAR.asItem(), "Frost Metal decorative block, Explosion proof");
         NORMAL.put(ModBlocks.CUT_FROST_METAL_SLAB.asItem(), "Frost Metal decorative block, Explosion proof");
@@ -309,12 +306,13 @@ public class ItemTooltipManager {
         NORMAL.put(ModBlocks.SPECTRAL_ANVIL.asItem(), "Creates phantom shadows when the upper magnet is demagnetized");
         NORMAL.put(ModBlocks.BLOCK_PLACER.asItem(), "Places blocks in front when powered by redstone");
         NORMAL.put(ModBlocks.STRUCTURE_SCANNER.asItem(), "Scans and stores structures in Structure Disk");
+        NORMAL.put(ModItems.STRUCTURE_DISK.get(), "Stores structure data, used in blueprint mode of Smart Block Placer");
         NORMAL.put(ModBlocks.SMART_BLOCK_PLACER.asItem(), "Advanced block placer with 5x5x5 configurable placement area");
         NORMAL.put(ModBlocks.FISH_TANK.asItem(), "Used for anvil synthesis and provides underwater breathing when worn");
         NORMAL.put(ModBlocks.BLOCK_DEVOURER.asItem(), "Breaks 3×3 area of blocks in front when powered by redstone");
         NORMAL.put(ModBlocks.INDUCTION_LIGHT.asItem(), "Provides lighting and configurable special modes");
         NORMAL.put(ModBlocks.HELIOSTATS.asItem(), "Heats targeted blocks during the day");
-        NORMAL.put(ModItems.IONOCRAFT_BACKPACK.asItem(), "Allows creative flight while equipped, requires power from the energy grid or capacitors");
+        NORMAL.put(ModItems.IONOCRAFT_BACKPACK.asItem(), "Allows creative flight while equipped, requires power from the energy grid or capacitors in the inventory");
         NORMAL.put(ModBlocks.BLOCK_COMPARATOR.asItem(), "Outputs signal when side blocks are the same, right-click to switch to precise state detection mode");
         NORMAL.put(ModBlocks.ITEM_DETECTOR.asItem(), "Detects specific items behind (drops/containers) to output redstone signal");
         NORMAL.put(ModBlocks.IMPACT_PILE.asItem(), "Place on Bedrock and strike with falling anvil to create Moneral Fountain");
@@ -323,6 +321,9 @@ public class ItemTooltipManager {
         NORMAL.put(ModBlocks.ACCELERATION_RING.asItem(), "Creates acceleration field for anvils, projectiles, or players with Anvil Hammer");
         NORMAL.put(ModBlocks.DEFLECTION_RING.asItem(), "Deflects passing objects 90°, detect speed with Comparator");
         NORMAL.put(ModItems.DRAGON_ROD.asItem(), "Portable block devourer with adjustable range");
+        NORMAL.put(ModItems.EMBER_DRAGON_ROD.asItem(), "Portable block devourer with adjustable range");
+        NORMAL.put(ModItems.ROYAL_DRAGON_ROD.asItem(), "Portable block devourer with adjustable range");
+        NORMAL.put(ModItems.TRANSCENDENCE_DRAGON_ROD.asItem(), "Portable block devourer with adjustable range");
         NORMAL.put(ModItems.FILTER.asItem(), "Matches items based on configuration, usable in any filter slot");
         NORMAL.put(ModItems.TOTEM_OF_RECOVERY.asItem(), "Teleports to spawn on death, grants a Recall Pearl to return to death point");
         NORMAL.put(ModItems.TOTEM_OF_RAGE.asItem(), "Grants invulnerability and berserk on fatal damage, death is inevitable after 1 minute");
@@ -331,58 +332,128 @@ public class ItemTooltipManager {
         NORMAL.put(ModItems.AMULET_BOX.asItem(), "Stores multiple active amulets or totems");
         NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL.asItem(), "Forge celestial bodies, build megastructures");
         NORMAL.put(ModItems.PIPE.get(), "Transports fluids between containers, gravity-driven flow");
-        NORMAL.put(ModBlocks.PUMP.asItem(), "Boosts fluid transport height, consumes 32 kW power");
+        NORMAL.put(ModBlocks.PUMP.asItem(), "Pumps fluids, consumes 32 kW");
         NORMAL.put(ModBlocks.CREATIVE_CRATE.asItem(), "Infinite item storage and supply");
         NORMAL.put(ModBlocks.CREATIVE_FLUID_TANK.asItem(), "Infinite fluid storage and supply");
         NORMAL.put(ModBlocks.FLUID_TANK.asItem(), "Stores 16B of fluid, expands to 640B when surrounded by Menger Sponges");
         NORMAL.put(ModBlocks.LARGE_FLUID_TANK.asItem(), "Stores 320 buckets of fluid, reaches infinite capacity when paired with Menger Sponges");
-        NORMAL.put(ModBlocks.DRAIN.asItem(), "Transfers fluid vertically, places below or absorbs above at 5 gt per bucket");
+        NORMAL.put(ModBlocks.DRAIN.asItem(), "Transfers fluid vertically, outputting downward and drawing from above");
         NORMAL.put(ModBlocks.CORRUPTED_BEACON.asItem(), "Releases the wither power within the beacon, its beam accelerates time flow or causes mutations");
-        NORMAL.put(ModBlocks.LARGE_CAKE.asItem(), "A cake, a very big cake. 27 bites, each bite fills you up.");
+        NORMAL.put(ModBlocks.LARGE_CAKE.asItem(), "A cake, a very big cake. 27 bites, each bite fills you up");
         NORMAL.put(ModBlocks.CONFINEMENT_CHAMBER.asItem(), "Contains elementary particles and unstable items, keeping them stable");
         NORMAL.put(ModBlocks.CONFINED_TIME_ANVILON.asItem(), "Confinement chamber for time-type Anvilon");
         NORMAL.put(ModBlocks.CONFINED_SPACE_ANVILON.asItem(), "Confinement chamber for space-type Anvilon");
         NORMAL.put(ModBlocks.CONFINED_MASS_ANVILON.asItem(), "Confinement chamber for mass-type Anvilon");
         NORMAL.put(ModBlocks.CONFINED_ENERGY_ANVILON.asItem(), "Confinement chamber for energy-type Anvilon");
-        NORMAL.put(ModBlocks.CONFINED_NEUTRONIUM_INGOT_BLOCK.asItem(), "A stable block of confined neutronium ingots");
+        NORMAL.put(ModBlocks.CONFINED_NEUTRONIUM_INGOT_BLOCK.asItem(), "A confinement chamber containing a Charged Neutronium Ingot");
         NORMAL.put(ModBlocks.NEUTRON_IRRADIATOR.asItem(), "Performs neutron irradiation recipes, absorbs confined anvilons for block procedural process");
-        NORMAL.put(ModBlocks.CAKE_BASE_BLOCK.asItem(), "A slice of cake, use a shovel as a spoon to eat it");
+        NORMAL.put(ModBlocks.CAKE_BASE_BLOCK.asItem(), "A block of cake base, use a shovel as a spoon to eat it");
         NORMAL.put(ModBlocks.CREAM_BLOCK.asItem(), "A block of cream, use a shovel as a spoon to eat it");
         NORMAL.put(ModBlocks.BERRY_CREAM_BLOCK.asItem(), "A block of berry cream, use a shovel as a spoon to eat it");
         NORMAL.put(ModBlocks.CHOCOLATE_CREAM_BLOCK.asItem(), "A block of chocolate cream, use a shovel as a spoon to eat it");
-        NORMAL.put(ModBlocks.CAKE_BLOCK.asItem(), "A slice of assembled cake, use a shovel as a spoon to eat it");
-        NORMAL.put(ModBlocks.BERRY_CAKE_BLOCK.asItem(), "A slice of berry cake, use a shovel as a spoon to eat it");
-        NORMAL.put(ModBlocks.CHOCOLATE_CAKE_BLOCK.asItem(), "A slice of chocolate cake, use a shovel as a spoon to eat it");
-        NORMAL.put(ModBlocks.CONTROL_VALVE.asItem(), "Controls fluid flow direction, redstone-controllable on/off");
-        NORMAL.put(ModBlocks.SPACETIME_SUPERCOMPUTER.asItem(), "Executes commands on a timer, runs on power");
-        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_AMPLIFIER.asItem(), "Amplifies the Celestial Forging Anvil to support larger megastructures");
-        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_LOGISTICS_INTERFACE.asItem(), "Item I/O interface for the Celestial Forging Anvil");
-        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_FLUID_INTERFACE.asItem(), "Fluid I/O interface for the Celestial Forging Anvil");
-        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_LASER_INTERFACE.asItem(), "Laser I/O interface for the Celestial Forging Anvil");
-        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_INTERFACE_PLACEHOLDER.asItem(), "Placeholder block for Celestial Forging Anvil structure");
+        NORMAL.put(ModBlocks.CAKE_BLOCK.asItem(), "A block of cream cake, use a shovel as a spoon to eat it");
+        NORMAL.put(ModBlocks.BERRY_CAKE_BLOCK.asItem(), "A block of berry cake, use a shovel as a spoon to eat it");
+        NORMAL.put(ModBlocks.CHOCOLATE_CAKE_BLOCK.asItem(), "A block of chocolate cake, use a shovel as a spoon to eat it");
+        NORMAL.put(ModBlocks.CONTROL_VALVE.asItem(), "Controls the type and flow rate of passing fluids and can be locked by redstone");
+        NORMAL.put(ModBlocks.SPACETIME_SUPERCOMPUTER.asItem(), "Consumes power to run certain time commands");
+        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_AMPLIFIER.asItem(), "Amplifies the Celestial Forging Anvil so it can support larger celestial bodies and megastructures");
+        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_LOGISTICS_INTERFACE.asItem(), "Stores multiple item types, one stack each; switch modes with an Anvil Hammer to output items actively");
+        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_FLUID_INTERFACE.asItem(), "Stores multiple fluids, 80 B each; switch modes with an Anvil Hammer to output fluids actively");
+        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_LASER_INTERFACE.asItem(), "Receives lasers; switch modes with an Anvil Hammer to emit lasers actively");
+        NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_INTERFACE_PLACEHOLDER.asItem(), "A decorative, nonfunctional Celestial Forging Anvil interface; right-click it with any of the three functional interfaces to replace it");
         NORMAL.put(ModBlocks.CELESTIAL_FORGING_ANVIL_PORTAL.asItem(), "Teleports players and entities between two portals");
         NORMAL.put(ModBlocks.LENS.asItem(), "Use special glass to enchant lasers");
         NORMAL.put(ModItems.CHECK_VALVE.get(), "Allows fluid to flow in only one direction");
-        NORMAL.put(ModItems.DYSON_SPHERE_COMPONENT.get(), "Material for crafting the Dyson Sphere");
-        NORMAL.put(ModItems.PENROSE_SPHERE_COMPONENT.get(), "Material for crafting the Penrose Sphere");
-        NORMAL.put(ModItems.MATTER_DECOMPRESSOR_COMPONENT.get(), "Material for crafting the Matter Decompressor");
-        NORMAL.put(ModItems.WORMHOLE_STABILIZER_COMPONENT.get(), "Material for crafting the Wormhole Stabilizer");
+        NORMAL.put(ModItems.DYSON_SPHERE_COMPONENT.get(), "Material for building a Dyson Sphere, used in the Celestial Forging Anvil");
+        NORMAL.put(ModItems.PENROSE_SPHERE_COMPONENT.get(), "Material for building a Penrose Sphere, used in the Celestial Forging Anvil");
+        NORMAL.put(ModItems.MATTER_DECOMPRESSOR_COMPONENT.get(), "Material for building a Matter Decompressor, used in the Celestial Forging Anvil");
+        NORMAL.put(ModItems.WORMHOLE_STABILIZER_COMPONENT.get(), "Material for building a Wormhole Stabilizer, used in the Celestial Forging Anvil");
+        NORMAL.put(ModBlocks.REDSTONE_WIRE.asItem(), "Transmit redstone signals more precisely");
+        NORMAL.put(ModBlocks.TRADING_STATION.asItem(), "Trading platform for players and villagers");
+        NORMAL.put(ModBlocks.LARGE_LASER.asItem(), "Equivalent to 16 lasers, outputs 16 intensity levels of laser, consumes 256 kW");
+        NORMAL.put(
+            ModBlocks.SUGAR_BLOCK.asItem(), """
+            A large block of sugar
+            Also a piezoelectric crystal, but seems fragile"""
+        );
+        NORMAL.put(
+            ModBlocks.FLINT_BLOCK.asItem(), """
+            A large block of flint
+            When pushed or pulled by a piston, it creates fire around it if an iron block is nearby"""
+        );
+        NORMAL.put(
+            ModBlocks.GUNPOWER_BLOCK.asItem(), """
+            A large block of gunpowder
+            If struck by a falling anvil, it explodes and launches the anvil back up to the height it fell from"""
+        );
+        NORMAL.put(
+            ModBlocks.ROTTEN_FLESH_BLOCK.asItem(), """
+            A large block of rotten flesh
+            It cushions fall damage, but landing on it will make you nauseous for 30 seconds
+            Can also be smelted into Netherrack"""
+        );
+        NORMAL.put(ModBlocks.SINGULARITY_CRYSTAL.asItem(), "Data disk for storing extreme celestial data from the Celestial Forging Anvil");
+        NORMAL.put(ModItems.LASER_GUN.get(), "Hold right-click to consume power and fire a laser that grows increasingly powerful");
+        NORMAL.put(ModItems.CORRUPTED_BEACON_ACTIVATOR.get(), "Hold right-click to consume power and fire a corruption beam");
+        NORMAL.put(ModItems.TESLA_GUN.get(), "Hold right-click to consume power and fire chain lightning that bounces between mobs");
+        NORMAL.put(ModItems.ANVIL_RAILGUN.get(), "Hold right-click to consumes power to charge up and launch a high-speed anvil");
+        NORMAL.put(ModItems.SPECTRAL_SLINGSHOT.get(), "Hold right-click to consume power and fires spectral weapons");
+        NORMAL.put(ModItems.ENERGY_WEAPON_PLATFORM.get(), "640 MFE stored, but will only inherit the result of Energy Weapon Making");
 
         SHIFT.put(
+            ModItems.LASER_GUN.get(), """
+                The laser damages mobs and can also mine blocks
+                Charging longer increases damage, but watch out for overheating!
+                Enchanting the laser gun alters its beam behavior"""
+        );
+        SHIFT.put(
+            ModItems.CORRUPTED_BEACON_ACTIVATOR.get(), """
+                Fires a beam of corruption that pierces through targets, dealing damage and inflicting Wither
+                It passes through glass and does not convert mobs
+                Enchanting the Corrupted Beacon Exciter boosts the beam's damage"""
+        );
+        SHIFT.put(
+            ModItems.TESLA_GUN.get(), """
+                Fires chain lightning that arcs between up to 4 mobs, dealing reduced damage with each bounce
+                The lightning can convert mobs, and lightning rods will also be targeted
+                Each strike is followed by a cooldown, which can be shortened by enchanting the Tesla Gun"""
+        );
+        SHIFT.put(
+            ModItems.ANVIL_RAILGUN.get(), """
+                Hold right-click to load an anvil from your offhand into the railgun
+                Then hold right-click again to charge up, and release to launch the anvil
+                Longer charging results in higher speed and damage
+                Enchanting the Anvil Railgun can boost damage, reduce charge time, or change its firing behavior"""
+        );
+        SHIFT.put(
+            ModItems.SPECTRAL_SLINGSHOT.get(), """
+                Hold right-click to load your offhand weapon into the Spectral Slingshot
+                Once loaded, right-click again to fire a spectral copy of that weapon, dealing damage
+                Each shot has a cooldown, which can be reduced by enchanting the launcher"""
+        );
+        SHIFT.put(
+            ModItems.ENERGY_WEAPON_PLATFORM.get(), """
+                640 MFE stored, but will only inherit the result of Energy Weapon Making
+                Can be crafted with different materials to create various energy weapons
+                Consumes capacitors to restore power"""
+        );
+        SHIFT.put(
             ModItems.CHECK_VALVE.get(), """
-                When holding a check valve, right-click one end of a pipe to convert that end into a check valve.
-                Can remove check valve by right-clicking it while holding a check valve, or with an empty hand.
-                Supplying a redstone signal reverses the flow direction of the check valve""");
+                When holding a check valve, right-click one end of a pipe to convert that end into a check valve
+                Can remove check valve by right-clicking it while holding a check valve, or with an empty hand
+                Supplying a redstone signal reverses the flow direction of the check valve"""
+        );
         SHIFT.put(
             ModBlocks.CELESTIAL_FORGING_ANVIL.asItem(), """
                 Place an anvil to determine celestial parameters
                 Once a suitable celestial body is found, lock it to build a megastructure
                 Unlocking the celestial body will destroy the megastructure
-                Different megastructures serve different purposes — check the megastructure button for details""");
+                Different megastructures serve different purposes — check the megastructure button for details"""
+        );
         SHIFT.put(
-            ModBlocks.SPECTRAL_ANVIL.asItem(),
-            "When the upper magnet is demagnetized, a phantom shadow is created and falls downward, "
-            + "it can pass through transparent blocks, and no matter the actual height, the impact is always treated as a 2‑block fall"
+            ModBlocks.SPECTRAL_ANVIL.asItem(), """
+            When the upper magnet is demagnetized, a phantom shadow is created and falls downward
+            It can pass through transparent blocks, and no matter the actual height, the impact is always treated as a 2‑block fall"""
         );
         SHIFT.put(
             ModBlocks.BLOCK_PLACER.asItem(), """
@@ -439,6 +510,18 @@ public class ItemTooltipManager {
             "Portable block devourer, left-click to mine, right-click to adjust range, larger range costs more durability"
         );
         SHIFT.put(
+            ModItems.EMBER_DRAGON_ROD.asItem(),
+            "Portable block devourer, left-click to mine, right-click to adjust range, larger range costs more durability"
+        );
+        SHIFT.put(
+            ModItems.ROYAL_DRAGON_ROD.asItem(),
+            "Portable block devourer, left-click to mine, right-click to adjust range, larger range costs more durability"
+        );
+        SHIFT.put(
+            ModItems.TRANSCENDENCE_DRAGON_ROD.asItem(),
+            "Portable block devourer, left-click to mine, right-click to adjust range, larger range costs more durability"
+        );
+        SHIFT.put(
             ModItems.PILL_BOX.asItem(),
             "Store pills, right-click to take one pill each, and press [%s] to use them in the inventory"
         );
@@ -446,11 +529,12 @@ public class ItemTooltipManager {
             ModItems.AMULET_BOX.asItem(), """
                 Stores multiple active amulets or totems
                 Right click to store the Totems of Undying on your inventory, and shift-right-click to retrieve the totems;
-                When holding, consume the totems in the box when needed, and after consuming the totem, you may receive a secret gift."""
+                When holding, consume the totems in the box when needed, and after consuming the totem, you may receive a secret gift"""
         );
         SHIFT.put(ModBlocks.PUMP.asItem(), """
             Provides 10 blocks of headlift on both input and output sides (including the pump itself)
-            Also functions as check valve, allowing liquid to flow through only in the pump's direction""");
+            Also functions as check valve, allowing liquid to flow through only in the pump's direction
+            A redstone signal disables the pump""");
         SHIFT.put(
             ModBlocks.CREATIVE_CRATE.asItem(), """
                 Provides infinite items of a set type: place items inside to configure
@@ -474,14 +558,24 @@ public class ItemTooltipManager {
         SHIFT.put(
             ModBlocks.CELESTIAL_FORGING_ANVIL_PORTAL.asItem(), """
                 Teleports players and entities between two portals
-                Requires a Celestial Forging Anvil with an established wormhole connection"""
+                Connected Celestial Forging Anvil wormholes can link two portals facing the same direction"""
         );
-
         SHIFT.put(
             ModBlocks.DRAIN.asItem(), """
-                Draining: >1B fluid inside and space below -> places fluid downward, fills from bottom up, 5 gt per bucket
-                Suction: <3B fluid inside and same fluid above (or empty + any fluid) -> absorbs fluid above without block updates, 5 gt per bucket
-                Ignores same-level fluid unless it forms an infinite source, then fills internal for free at 5 gt per bucket"""
+                Draining: when more than 1 B is stored and there is space below, outputs fluid downward and fills the entire space from the bottom up
+                Suction: when less than 3 B is stored and the same fluid is above, draws fluid from above and can empty the entire space above
+                Does not interact with fluid at the same height; fluid can be stored for free only when it forms an infinite source"""
+        );
+        SHIFT.put(ModBlocks.REDSTONE_WIRE.asItem(), """
+                It can be attached to any full face of a block,
+                only inputs and outputs redstone signals at its breaks (ends)
+                The redstone signal level does not decay within the wire,
+                and the wire will not output the signal received from redstone dust back to redstone dust""");
+        SHIFT.put(
+            ModBlocks.TRADING_STATION.asItem(), """
+                Can be set to trade with players or villagers
+                Villagers will actively trade with stations that have valid offers and fair prices
+                Has 12 slots for temporary item storage"""
         );
 
         Map<Item, String> allTooltips = Maps.newHashMap();
@@ -509,14 +603,6 @@ public class ItemTooltipManager {
             );
         }
         if (stack.has(ModComponents.MULTIPHASE)) {
-            if (AnvilCraftClient.CONFIG.showMultiphaseStoredId) {
-                propertyTooltip(
-                    "multiphase.id",
-                    tooltip,
-                    0xDD91FA,
-                    Objects.requireNonNull(stack.get(ModComponents.MULTIPHASE)).id().toString()
-                );
-            }
             propertyTooltip(
                 "multiphase",
                 tooltip,
